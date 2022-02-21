@@ -8,4 +8,6 @@ export const PORT = parseInt(process.env.PORT) ?? 8080;
 
 export const MONGO_URI = IS_PROD
   ? process.env.MONGO_URI_PROD
+  : process.env.NODE_ENV === "test"
+  ? process.env.MONGO_URI_TEST
   : process.env.MONGO_URI_DEV;
