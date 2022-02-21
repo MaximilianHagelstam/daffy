@@ -1,0 +1,10 @@
+{
+  "eslint.workingDirectories": ["server", "web"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/package-lock.json": true
+  }
+}
