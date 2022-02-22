@@ -1,9 +1,10 @@
 import cors from "cors";
-import express, { Request, Response } from "express";
+import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import "reflect-metadata";
 import connectDb from "./config/connectDb";
+import userRouter from "./controllers/users";
 
 void connectDb();
 
@@ -14,8 +15,6 @@ app.use(morgan("tiny"));
 app.use(helmet());
 app.use(cors());
 
-app.use("/", (_req: Request, res: Response) => {
-  return res.json({ msg: "Hello" });
-});
+app.use("/api/users", userRouter);
 
 export default app;

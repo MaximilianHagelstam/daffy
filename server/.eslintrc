@@ -18,6 +18,7 @@
   },
   "rules": {
     "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "no-shadow": "warn",
     "no-console": "warn"
   }
