@@ -4,7 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import "reflect-metadata";
 import connectDb from "./config/connectDb";
-import userRouter from "./controllers/users";
+import userRouter from "./routes/userRouter";
 
 void connectDb();
 
