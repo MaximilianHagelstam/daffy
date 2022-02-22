@@ -17,6 +17,9 @@ export default class User extends BaseEntity {
   @Column({ unique: true })
   username: string;
 
+  @Column({ unique: true })
+  avatar: string;
+
   @OneToMany(() => Post, (post) => post.creator)
   posts: Post[];
 

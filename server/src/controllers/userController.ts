@@ -14,9 +14,19 @@ const register = async (req: Request, res: Response) => {
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
-  const user = await User.create({ username, password: passwordHash }).save();
 
-  return res.json({ user: { id: user.id, username: user.username } });
+  const seed = (Math.random() + 1).toString(36).substring(2);
+  const avatar = `https://avatars.dicebear.com/api/big-ears-neutral/${seed}.svg`;
+
+  const user = await User.create({
+    username,
+    password: passwordHash,
+    avatar,
+  }).save();
+
+  return res.json({
+    user: { id: user.id, username: user.username, avatar: user.avatar },
+  });
 };
 
 const login = async (req: Request, res: Response) => {
