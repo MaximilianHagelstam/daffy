@@ -3,12 +3,12 @@ name: server:build_and_lint
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - "server/**"
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - "server/**"
 
