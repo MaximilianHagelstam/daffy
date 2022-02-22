@@ -6,6 +6,10 @@ import validateRequest from "../middleware/validateRequest";
 const userRouter = express.Router();
 
 userRouter.get("/", userController.findAll);
-userRouter.post("/", validateRequest(createUserDto), userController.create);
+userRouter.post(
+  "/register",
+  validateRequest(createUserDto),
+  userController.register
+);
 
 export default userRouter;
