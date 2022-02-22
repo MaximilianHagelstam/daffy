@@ -28,5 +28,6 @@
     "strictPropertyInitialization": false
   },
   "include": ["./src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "typeRoots": ["./src/types/*.d.ts"]
 }
