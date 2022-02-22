@@ -6,6 +6,6 @@ export const IS_PROD = process.env.NODE_ENV === "production";
 
 export const PORT = parseInt(<string>process.env.PORT) ?? 8080;
 
-export const MONGO_URI = IS_PROD
-  ? process.env.MONGO_URI_PROD
-  : process.env.MONGO_URI_DEV;
+export const DB_URL = IS_PROD
+  ? process.env.DB_URL_PROD
+  : process.env.DB_URL_DEV;

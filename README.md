@@ -2,12 +2,12 @@
   <img src="logo.png"/>
 </p>
 
-<h1 align="center">Nito</h1>
+<h2 align="center">Nito</h2>
 
 ## Prerequisites
 
 - Node.js
-- MongoDB
+- PostgreSQL
 
 ## Getting Started
 
@@ -31,8 +31,8 @@ cp .env.example .env
 # install deps
 yarn
 
-# run local mongodb instance
-mongod
+# run local postgresql instance
+yarn start-db
 
 # start server
 yarn dev

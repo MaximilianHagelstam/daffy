@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import "reflect-metadata";
 import connectDb from "./config/connectDb";
 
 void connectDb();
