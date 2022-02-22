@@ -3,25 +3,25 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import User from "./User";
+import Post from "./Post";
 
 @Entity()
-export default class Post extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column()
-  body!: string;
+  @Column({ unique: true })
+  username!: string;
+
+  @OneToMany(() => Post, (post) => post.creator)
+  posts!: Post[];
 
   @Column()
-  creatorId!: string;
-
-  @ManyToOne(() => User, (user) => user.posts)
-  creator!: User;
+  password!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
