@@ -1,0 +1,40 @@
+name: Web CI
+
+on:
+  push:
+    # paths:
+    #   - "web/**"
+    branches: [master]
+  pull_request:
+    # paths:
+    #   - "web/**"
+    branches: [master]
+
+jobs:
+  build:
+    name: Lint and test frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: "yarn"
+      - name: Install dependencies
+        working-directory: web
+        run: yarn
+      - name: Build
+        working-directory: web
+        run: yarn build
+      - name: Test
+        working-directory: web
+        run: yarn test
+      - name: Lint
+        working-directory: web
+        run: yarn lint
+      - name: Format
+        working-directory: web
+        run: yarn format
