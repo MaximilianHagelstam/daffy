@@ -4,7 +4,7 @@ dotenv.config();
 
 export const IS_PROD = process.env.NODE_ENV === "production";
 
-export const PORT = parseInt(<string>process.env.PORT) ?? 8080;
+export const PORT = process.env.PORT ?? 8080;
 
 export const DB_URL = IS_PROD
   ? process.env.DB_URL_PROD

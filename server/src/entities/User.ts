@@ -12,20 +12,20 @@ import Post from "./Post";
 @Entity()
 export default class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  id: string;
 
   @Column({ unique: true })
-  username!: string;
+  username: string;
 
   @OneToMany(() => Post, (post) => post.creator)
-  posts!: Post[];
+  posts: Post[];
 
   @Column()
-  password!: string;
+  password: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt: Date;
 }
