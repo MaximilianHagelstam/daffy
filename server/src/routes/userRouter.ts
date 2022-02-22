@@ -1,16 +1,20 @@
 import express from "express";
 import userController from "../controllers/userController";
-import loginUserDto from "../dto/loginUserDto";
-import registerUserDto from "../dto/registerUserDto";
 import validateRequest from "../middleware/validateRequest";
+import loginUserSchema from "../validators/loginUserSchema";
+import registerUserSchema from "../validators/registerUserSchema";
 
 const userRouter = express.Router();
 
 userRouter.post(
   "/register",
-  validateRequest(registerUserDto),
+  validateRequest(registerUserSchema),
   userController.register
 );
-userRouter.post("/login", validateRequest(loginUserDto), userController.login);
+userRouter.post(
+  "/login",
+  validateRequest(loginUserSchema),
+  userController.login
+);
 
 export default userRouter;

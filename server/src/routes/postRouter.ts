@@ -1,8 +1,8 @@
 import express from "express";
 import postController from "../controllers/postController";
-import createPostDto from "../dto/createPostDto";
 import authenticate from "../middleware/authenticate";
 import validateRequest from "../middleware/validateRequest";
+import createPostSchema from "../validators/createPostSchema";
 
 const postRouter = express.Router();
 
@@ -10,7 +10,7 @@ postRouter.get("/", authenticate, postController.findAll);
 postRouter.post(
   "/",
   authenticate,
-  validateRequest(createPostDto),
+  validateRequest(createPostSchema),
   postController.create
 );
 

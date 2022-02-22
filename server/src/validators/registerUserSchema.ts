@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-const registerUserDto = object().shape({
+const registerUserSchema = object().shape({
   username: string()
     .required()
     .min(1, "Username must be 1 character minimum")
@@ -15,4 +15,4 @@ const registerUserDto = object().shape({
     .matches(/(?=.*[0-9])/, "Password must contain a number"),
 });
 
-export default registerUserDto;
+export default registerUserSchema;
