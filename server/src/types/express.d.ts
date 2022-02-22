@@ -1,9 +1,5 @@
-interface Jwt {
-  id: string;
-}
-
 declare namespace Express {
   export interface Request {
-    jwt: Jwt;
+    jwt: import("../interfaces/Jwt").default;
   }
 }

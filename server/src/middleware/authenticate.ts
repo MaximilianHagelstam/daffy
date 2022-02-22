@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-
-interface Jwt {
-  id: string;
-}
+import Jwt from "../interfaces/Jwt";
 
 const getRequestToken = (req: Request): string | null => {
   const authorization = req.get("authorization");
