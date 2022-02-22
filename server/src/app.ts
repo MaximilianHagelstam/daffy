@@ -14,7 +14,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use("/", (_req: Request, res: Response) => {
-  return res.json({ msg: "ok" });
+  return res.json({ msg: "Hello" });
 });
 
 export default app;
