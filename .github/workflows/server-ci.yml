@@ -1,0 +1,39 @@
+name: Server CI
+
+on:
+  push:
+    # paths:
+    #   - "server/**"
+    branches:
+      - main
+  pull_request:
+    # paths:
+    #   - "server/**"
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and lint server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: "yarn"
+      - name: Install dependencies
+        working-directory: server
+        run: yarn
+      - name: Build
+        working-directory: server
+        run: yarn build
+      - name: Lint
+        working-directory: server
+        run: yarn lint
+      - name: Format
+        working-directory: server
+        run: yarn format
