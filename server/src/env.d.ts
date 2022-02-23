@@ -6,3 +6,9 @@ declare namespace NodeJS {
     JWT_SECRET: string;
   }
 }
+
+declare namespace Express {
+  export interface Request {
+    jwt: import("./interfaces/Jwt").default;
+  }
+}

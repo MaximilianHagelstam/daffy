@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Post from "../entities/Post";
 
-const findAll = async (req: Request, res: Response) => {
-  const posts = await Post.find({ where: { creatorId: req.jwt.id } });
+const findAll = async (_req: Request, res: Response) => {
+  const posts = await Post.find({ relations: ["creator"] });
   res.json({ posts });
 };
 

@@ -14,18 +14,13 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = getRequestToken(req);
   if (!token) {
     return res.status(401).json({
-      error: "Missing token",
+      error: "missing or invalid token",
     });
   }
 
-  const decoded = jwt.verify(token, `${process.env.JWT_SECRET}`);
-  if (!decoded) {
-    return res.status(401).json({
-      error: "Invalid token",
-    });
-  }
-
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
   req.jwt = decoded as Jwt;
+
   return next();
 };
 

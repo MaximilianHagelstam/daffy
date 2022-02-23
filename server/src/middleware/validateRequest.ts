@@ -17,7 +17,7 @@ const validateRequest =
 
       return res
         .status(400)
-        .json({ error: "Request body does not match the validation schema" });
+        .json({ error: "request body does not match the validation schema" });
     }
   };
 

@@ -8,9 +8,8 @@ const register = async (req: Request, res: Response) => {
   const { username, password } = requestBody;
 
   const userWithSameUsername = await User.findOne({ where: { username } });
-
   if (userWithSameUsername) {
-    return res.status(400).json({ error: "Username taken" });
+    return res.status(400).json({ error: "username taken" });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
@@ -24,9 +23,7 @@ const register = async (req: Request, res: Response) => {
     avatar,
   }).save();
 
-  return res.json({
-    user: { id: user.id, username: user.username, avatar: user.avatar },
-  });
+  return res.json({ user });
 };
 
 const login = async (req: Request, res: Response) => {
@@ -35,12 +32,12 @@ const login = async (req: Request, res: Response) => {
 
   const user = await User.findOne({ where: { username } });
   if (!user) {
-    return res.status(401).json({ error: "Invalid username or password" });
+    return res.status(401).json({ error: "invalid username or password" });
   }
 
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   if (!passwordIsCorrect) {
-    return res.status(401).json({ error: "Invalid username or password" });
+    return res.status(401).json({ error: "invalid username or password" });
   }
 
   const token = jwt.sign(
@@ -48,11 +45,11 @@ const login = async (req: Request, res: Response) => {
       username: user.username,
       id: user.id,
     },
-    `${process.env.JWT_SECRET}`,
+    process.env.JWT_SECRET,
     { expiresIn: 60 * 60 * 24 }
   );
 
-  return res.status(200).send({ token, username: user.username });
+  return res.json({ token, user });
 };
 
 export default { register, login };

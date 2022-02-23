@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import Post from "./Post";
 
-@Entity()
+@Entity({ name: "users" })
 export default class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -17,14 +17,14 @@ export default class User extends BaseEntity {
   @Column({ unique: true })
   username: string;
 
-  @Column({ unique: true })
+  @Column()
+  password: string;
+
+  @Column()
   avatar: string;
 
   @OneToMany(() => Post, (post) => post.creator)
   posts: Post[];
-
-  @Column()
-  password: string;
 
   @CreateDateColumn()
   createdAt: Date;
