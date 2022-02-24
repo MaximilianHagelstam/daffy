@@ -1,13 +1,7 @@
-import { Button } from "@chakra-ui/react";
-import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
-  return (
-    <>
-      <Header />
-      <Button>Hello</Button>
-    </>
-  );
+  return <Sidebar>Hello</Sidebar>;
 };
 
 export default App;
