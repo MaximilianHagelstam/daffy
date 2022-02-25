@@ -6,14 +6,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import User from "../../interfaces/User";
 import MobileNav from "./MobileNav";
 import SidebarContent from "./SidebarContent";
 
 interface SidebarProps {
+  user: User;
   children: ReactNode;
 }
 
-const Sidebar = ({ children }: SidebarProps) => {
+const Sidebar = ({ user, children }: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -35,14 +37,7 @@ const Sidebar = ({ children }: SidebarProps) => {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileNav
-        onOpen={onOpen}
-        user={{
-          username: "james",
-          avatar:
-            "https://avatars.dicebear.com/api/big-ears-neutral/your-cusdsfsatom-seed.svg",
-        }}
-      />
+      <MobileNav onOpen={onOpen} user={user} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>

@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
     return <Navigate to="/login" />;
   }
 
-  return <Sidebar>{children}</Sidebar>;
+  return <Sidebar user={currentUser}>{children}</Sidebar>;
 };
 
 export default PrivateRoute;
