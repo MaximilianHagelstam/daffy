@@ -5,10 +5,20 @@ import User from "../interfaces/User";
 const UserService = {
   getCurrentUser: async (): Promise<User | null> => {
     try {
+      const token = window.localStorage.getItem("nitoUserToken");
+      if (token === null) {
+        return null;
+      }
+
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/users/current`
+        `${process.env.REACT_APP_API_URL}/api/users/current`,
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        }
       );
-      return data;
+      return data.user;
     } catch (err) {
       return null;
     }

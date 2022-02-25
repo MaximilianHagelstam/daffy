@@ -10,12 +10,22 @@ export const UserContext = React.createContext<User | null>(null);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getCurrentUser().then((res) => {
-      setCurrentUser(res);
-    });
+    const setUser = async () => {
+      const user = await UserService.getCurrentUser();
+
+      setCurrentUser(user);
+      setLoading(false);
+    };
+
+    setUser();
   }, []);
+
+  if (loading) {
+    return <>Loading...</>;
+  }
 
   return (
     <UserContext.Provider value={currentUser}>{children}</UserContext.Provider>
