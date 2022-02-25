@@ -23,7 +23,7 @@ const register = async (req: Request, res: Response) => {
     avatar,
   }).save();
 
-  return res.json({ user });
+  return res.status(201).json({ user });
 };
 
 const login = async (req: Request, res: Response) => {

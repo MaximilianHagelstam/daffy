@@ -14,7 +14,7 @@ const create = async (req: Request, res: Response) => {
     creatorId: req.token.id,
   }).save();
 
-  res.json({ post });
+  res.status(201).json({ post });
 };
 
 export default { findAll, create };

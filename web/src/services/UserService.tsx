@@ -12,6 +12,16 @@ const UserService = {
       return null;
     }
   },
+  register: async (username: string, password: string): Promise<User> => {
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/users/current`,
+      {
+        username,
+        password,
+      }
+    );
+    return data.user;
+  },
 };
 
 export default UserService;
