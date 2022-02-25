@@ -9,7 +9,11 @@ import { ReactNode } from "react";
 import MobileNav from "./MobileNav";
 import SidebarContent from "./SidebarContent";
 
-const Sidebar = ({ children }: { children: ReactNode }) => {
+interface SidebarProps {
+  children: ReactNode;
+}
+
+const Sidebar = ({ children }: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

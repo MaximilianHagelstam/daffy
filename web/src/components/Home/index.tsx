@@ -1,7 +1,5 @@
-import Sidebar from "../Sidebar";
-
 const Home = () => {
-  return <Sidebar>Welcome</Sidebar>;
+  return <div>Welcome</div>;
 };
 
 export default Home;
