@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   IconButton,
@@ -14,18 +15,24 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { object, string } from "yup";
+
+const registerValidationSchema = object().shape({
+  username: string()
+    .required("Required")
+    .max(50, "Must be under 50 characters")
+    .matches(/^[a-zA-Z0-9]+$/, "Can only contain alphanumeric characters"),
+  password: string()
+    .required("Required")
+    .min(8, "Must be at least 8 characters")
+    .matches(/(?=.*[0-9])/, "Must contain a number"),
+});
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    console.log(username, password);
-  };
 
   return (
     <Flex
@@ -46,60 +53,82 @@ const Register = () => {
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
           p={8}
-          as="form"
-          onSubmit={handleSubmit}
         >
-          <Stack spacing={4}>
-            <FormControl id="username" isRequired>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <Input
-                type="text"
-                id="username"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <InputGroup>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <InputRightElement h={"full"}>
-                  <IconButton
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPasswordState) => !showPasswordState)
-                    }
-                    aria-label="show password toggle"
-                    icon={showPassword ? <FiEye /> : <FiEyeOff />}
-                  />
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-                type="submit"
-              >
-                Register
-              </Button>
-            </Stack>
-            <Stack pt={6}>
-              <Text align={"center"}>
-                Already a user?{" "}
-                <Link color={"blue.400"} href="/login">
-                  Login
-                </Link>
-              </Text>
-            </Stack>
-          </Stack>
+          <Formik
+            initialValues={{ username: "", password: "" }}
+            validationSchema={registerValidationSchema}
+            onSubmit={(data, { setSubmitting }) => {
+              setSubmitting(true);
+              // eslint-disable-next-line no-console
+              console.log(data);
+              setSubmitting(false);
+            }}
+          >
+            {({ errors, isSubmitting }) => (
+              <Form>
+                <Stack spacing={4}>
+                  <Field name="username">
+                    {({ field }: { field: unknown }) => (
+                      <FormControl isInvalid={errors.username !== undefined}>
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <Input {...field} id="username" />
+                        <FormErrorMessage>{errors.username}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="password">
+                    {({ field }: { field: unknown }) => (
+                      <FormControl isInvalid={errors.password !== undefined}>
+                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <InputGroup>
+                          <Input
+                            {...field}
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                          />
+                          <InputRightElement h={"full"}>
+                            <IconButton
+                              variant={"ghost"}
+                              onClick={() =>
+                                setShowPassword(
+                                  (showPasswordState) => !showPasswordState
+                                )
+                              }
+                              aria-label="show password toggle"
+                              icon={showPassword ? <FiEye /> : <FiEyeOff />}
+                            />
+                          </InputRightElement>
+                        </InputGroup>
+                        <FormErrorMessage>{errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Stack spacing={10} pt={2}>
+                    <Button
+                      size="lg"
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{
+                        bg: "blue.500",
+                      }}
+                      type="submit"
+                      isLoading={isSubmitting}
+                    >
+                      Register
+                    </Button>
+                  </Stack>
+                  <Stack pt={6}>
+                    <Text align={"center"}>
+                      Already a user?{" "}
+                      <Link color={"blue.400"} href="/login">
+                        Login
+                      </Link>
+                    </Text>
+                  </Stack>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </Stack>
     </Flex>
