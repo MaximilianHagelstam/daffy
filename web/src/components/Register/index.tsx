@@ -14,11 +14,14 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
+import UserService from "../../services/UserService";
 
 const registerValidationSchema = object().shape({
   username: string()
@@ -32,6 +35,9 @@ const registerValidationSchema = object().shape({
 });
 
 const Register = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -57,11 +63,25 @@ const Register = () => {
           <Formik
             initialValues={{ username: "", password: "" }}
             validationSchema={registerValidationSchema}
-            onSubmit={(data, { setSubmitting }) => {
+            onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
-              // eslint-disable-next-line no-console
-              console.log(data);
+
+              const { title, status } = await UserService.register(
+                data.username,
+                data.password
+              );
+
               setSubmitting(false);
+
+              toast({
+                title,
+                status,
+                isClosable: true,
+              });
+
+              if (status === "success") {
+                navigate("/login");
+              }
             }}
           >
             {({ errors, isSubmitting }) => (
