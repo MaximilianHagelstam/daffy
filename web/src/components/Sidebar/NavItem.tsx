@@ -4,13 +4,14 @@ import { IconType } from "react-icons";
 
 interface NavItemProps {
   icon: IconType;
+  link: string;
   children: ReactText;
 }
 
-const NavItem = ({ icon, children }: NavItemProps) => {
+const NavItem = ({ icon, link, children }: NavItemProps) => {
   return (
     <Link
-      href="#"
+      href={link}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -22,20 +23,18 @@ const NavItem = ({ icon, children }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "purple.400",
           color: "white",
         }}
       >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
+        <Icon
+          mr="4"
+          fontSize="16"
+          _groupHover={{
+            color: "white",
+          }}
+          as={icon}
+        />
         {children}
       </Flex>
     </Link>

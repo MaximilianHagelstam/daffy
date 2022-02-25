@@ -10,14 +10,15 @@ import {
 interface LinkItem {
   name: string;
   icon: IconType;
+  link: string;
 }
 
 const LinkItems: LinkItem[] = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favorites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Home", link: "/", icon: FiHome },
+  { name: "Trending", link: "/trending", icon: FiTrendingUp },
+  { name: "Explore", link: "/explore", icon: FiCompass },
+  { name: "Favorites", link: "/favorites", icon: FiStar },
+  { name: "Settings", link: "/settings", icon: FiSettings },
 ];
 
 export default LinkItems;

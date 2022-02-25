@@ -31,7 +31,14 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileNav onOpen={onOpen} />
+      <MobileNav
+        onOpen={onOpen}
+        user={{
+          username: "james",
+          avatar:
+            "https://avatars.dicebear.com/api/big-ears-neutral/your-cusdsfsatom-seed.svg",
+        }}
+      />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>
