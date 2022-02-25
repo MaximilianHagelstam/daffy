@@ -9,6 +9,6 @@ declare namespace NodeJS {
 
 declare namespace Express {
   export interface Request {
-    jwt: import("./interfaces/Jwt").default;
+    token: import("./interfaces/Token").default;
   }
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import Jwt from "../interfaces/Jwt";
+import Token from "../interfaces/Token";
 
 const getRequestToken = (req: Request): string | null => {
   const authorization = req.get("authorization");
@@ -19,7 +19,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  req.jwt = decoded as Jwt;
+  req.token = decoded as Token;
 
   return next();
 };

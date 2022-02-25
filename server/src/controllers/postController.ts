@@ -11,8 +11,9 @@ const create = async (req: Request, res: Response) => {
 
   const post = await Post.create({
     body: requestBody.body,
-    creatorId: req.jwt.id,
+    creatorId: req.token.id,
   }).save();
+
   res.json({ post });
 };
 
