@@ -77,6 +77,10 @@ const UserService = {
       return { message: "Could not log in", error: true };
     }
   },
+  logout: (): void => {
+    window.localStorage.clear();
+    window.location.reload();
+  },
 };
 
 export default UserService;

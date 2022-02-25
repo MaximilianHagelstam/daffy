@@ -17,9 +17,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { Navigate } from "react-router";
 import { object, string } from "yup";
+import { UserContext } from "../../context/userContext";
 import UserService from "../../services/UserService";
 
 const loginValidationSchema = object().shape({
@@ -30,10 +32,14 @@ const loginValidationSchema = object().shape({
 });
 
 const Login = () => {
-  // const navigate = useNavigate();
   const toast = useToast();
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const currentUser = useContext(UserContext);
+
+  if (currentUser) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Flex
@@ -64,17 +70,17 @@ const Login = () => {
 
               const res = await UserService.login(data.username, data.password);
 
+              setSubmitting(false);
+
               if (res.error) {
                 toast({
                   title: res.message,
                   status: "error",
                   isClosable: true,
                 });
+              } else {
+                window.location.reload();
               }
-
-              setSubmitting(false);
-
-              // navigate("/");
             }}
           >
             {({ errors, isSubmitting }) => (

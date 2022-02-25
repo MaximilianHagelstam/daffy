@@ -17,10 +17,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
+import { UserContext } from "../../context/userContext";
 import UserService from "../../services/UserService";
 
 const registerValidationSchema = object().shape({
@@ -37,8 +38,13 @@ const registerValidationSchema = object().shape({
 const Register = () => {
   const toast = useToast();
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const currentUser = useContext(UserContext);
+
+  if (currentUser) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Flex

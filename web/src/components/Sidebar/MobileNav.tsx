@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 import User from "../../interfaces/User";
+import UserService from "../../services/UserService";
 
 interface MobileProps {
   onOpen: () => void;
@@ -80,7 +81,7 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
-                <MenuItem>Sign out</MenuItem>
+                <MenuItem onClick={UserService.logout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
