@@ -2,10 +2,12 @@ import { UseToastOptions } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
 import User from "../interfaces/User";
 
+const LOCALSTORAGE_JWT_ID = "nitoUserToken";
+
 const UserService = {
   getCurrentUser: async (): Promise<User | null> => {
     try {
-      const token = window.localStorage.getItem("nitoUserToken");
+      const token = window.localStorage.getItem(LOCALSTORAGE_JWT_ID);
       if (token === null) {
         return null;
       }
@@ -60,7 +62,7 @@ const UserService = {
         }
       );
 
-      window.localStorage.setItem("nitoUserToken", data.token);
+      window.localStorage.setItem(LOCALSTORAGE_JWT_ID, data.token);
 
       return { message: "Logged in", error: false };
     } catch (err) {
@@ -78,7 +80,7 @@ const UserService = {
     }
   },
   logout: (): void => {
-    window.localStorage.clear();
+    window.localStorage.removeItem(LOCALSTORAGE_JWT_ID);
     window.location.reload();
   },
 };

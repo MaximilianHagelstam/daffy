@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import LinkItems from "./LinkItems";
 import NavItem from "./NavItem";
+import ToggleThemeButton from "./ToggleThemeButton";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -16,7 +17,6 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
-      transition="3s ease"
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
@@ -36,6 +36,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           {linkItem.name}
         </NavItem>
       ))}
+      <ToggleThemeButton />
     </Box>
   );
 };
