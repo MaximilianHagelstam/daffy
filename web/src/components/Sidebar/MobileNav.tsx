@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Flex,
   HStack,
   IconButton,
@@ -20,7 +19,7 @@ import UserService from "../../services/UserService";
 
 interface MobileProps {
   onOpen: () => void;
-  user?: User;
+  user: User;
 }
 
 const MobileNav = ({ onOpen, user }: MobileProps) => {
@@ -51,46 +50,39 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
         Nito
       </Text>
       <HStack spacing={{ base: "0", md: "6" }}>
-        {user ? (
-          <Flex alignItems={"center"}>
-            <Menu>
-              <MenuButton
-                py={2}
-                transition="all 0.3s"
-                _focus={{ boxShadow: "none" }}
-              >
-                <HStack>
-                  <Avatar size={"sm"} src={user.avatar} />
-                  <VStack
-                    display={{ base: "none", md: "flex" }}
-                    alignItems="flex-start"
-                    spacing="1px"
-                    ml="2"
-                  >
-                    <Text fontSize="sm">@{user.username}</Text>
-                  </VStack>
-                  <Box display={{ base: "none", md: "flex" }}>
-                    <FiChevronDown />
-                  </Box>
-                </HStack>
-              </MenuButton>
-              <MenuList
-                bg={useColorModeValue("white", "gray.900")}
-                borderColor={useColorModeValue("gray.200", "gray.700")}
-              >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={UserService.logout}>Logout</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-        ) : (
-          <>
-            <Button colorScheme="purple">Login</Button>
-            <Button>Register</Button>
-          </>
-        )}
+        <Flex alignItems={"center"}>
+          <Menu>
+            <MenuButton
+              py={2}
+              transition="all 0.3s"
+              _focus={{ boxShadow: "none" }}
+            >
+              <HStack>
+                <Avatar size={"sm"} src={user.avatar} />
+                <VStack
+                  display={{ base: "none", md: "flex" }}
+                  alignItems="flex-start"
+                  spacing="1px"
+                  ml="2"
+                >
+                  <Text fontSize="sm">@{user.username}</Text>
+                </VStack>
+                <Box display={{ base: "none", md: "flex" }}>
+                  <FiChevronDown />
+                </Box>
+              </HStack>
+            </MenuButton>
+            <MenuList
+              bg={useColorModeValue("white", "gray.900")}
+              borderColor={useColorModeValue("gray.200", "gray.700")}
+            >
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Settings</MenuItem>
+              <MenuDivider />
+              <MenuItem onClick={UserService.logout}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
+        </Flex>
       </HStack>
     </Flex>
   );

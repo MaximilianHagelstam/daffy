@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import Register from "./components/Register";
 import { UserProvider } from "./context/userContext";
@@ -10,6 +11,7 @@ const App = () => {
     <UserProvider>
       <Router>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route
             path="/"
             element={

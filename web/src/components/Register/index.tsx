@@ -132,10 +132,10 @@ const Register = () => {
                   <Stack spacing={10} pt={2}>
                     <Button
                       size="lg"
-                      bg={"blue.400"}
+                      bg={"purple.500"}
                       color={"white"}
                       _hover={{
-                        bg: "blue.500",
+                        bg: "purple.600",
                       }}
                       type="submit"
                       isLoading={isSubmitting}
@@ -146,7 +146,7 @@ const Register = () => {
                   <Stack pt={6}>
                     <Text align={"center"}>
                       Already a user?{" "}
-                      <Link color={"blue.400"} href="/login">
+                      <Link color={"purple.400"} href="/login">
                         Login
                       </Link>
                     </Text>
