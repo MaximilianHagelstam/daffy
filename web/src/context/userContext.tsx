@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import User from "../interfaces/User";
 import UserService from "../services/UserService";
 
@@ -24,7 +25,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   }, []);
 
   if (loading) {
-    return <>Loading...</>;
+    return <Loading />;
   }
 
   return (

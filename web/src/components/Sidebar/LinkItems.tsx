@@ -1,11 +1,5 @@
 import { IconType } from "react-icons";
-import {
-  FiCompass,
-  FiHome,
-  FiSettings,
-  FiStar,
-  FiTrendingUp,
-} from "react-icons/fi";
+import { FiArrowUp, FiHome, FiSearch, FiTv } from "react-icons/fi";
 
 interface LinkItem {
   name: string;
@@ -15,10 +9,9 @@ interface LinkItem {
 
 const LinkItems: LinkItem[] = [
   { name: "Home", link: "/", icon: FiHome },
-  { name: "Trending", link: "/trending", icon: FiTrendingUp },
-  { name: "Explore", link: "/explore", icon: FiCompass },
-  { name: "Favorites", link: "/favorites", icon: FiStar },
-  { name: "Settings", link: "/settings", icon: FiSettings },
+  { name: "Search", link: "/search", icon: FiSearch },
+  { name: "Upvoted", link: "/upvoted", icon: FiArrowUp },
+  { name: "Live chat", link: "/chat", icon: FiTv },
 ];
 
 export default LinkItems;

@@ -53,11 +53,7 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
         <Flex alignItems={"center"}>
           <ToggleThemeButton />
           <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
+            <MenuButton py={2} _focus={{ boxShadow: "none" }}>
               <HStack>
                 <Avatar size={"sm"} src={user.avatar} />
                 <VStack
