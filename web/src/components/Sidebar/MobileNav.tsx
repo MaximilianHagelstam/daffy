@@ -6,7 +6,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Text,
@@ -16,6 +15,7 @@ import {
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 import User from "../../interfaces/User";
 import UserService from "../../services/UserService";
+import ToggleThemeButton from "./ToggleThemeButton";
 
 interface MobileProps {
   onOpen: () => void;
@@ -51,6 +51,7 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
       </Text>
       <HStack spacing={{ base: "0", md: "6" }}>
         <Flex alignItems={"center"}>
+          <ToggleThemeButton />
           <Menu>
             <MenuButton
               py={2}
@@ -76,9 +77,6 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuDivider />
               <MenuItem onClick={UserService.logout}>Logout</MenuItem>
             </MenuList>
           </Menu>
