@@ -30,7 +30,11 @@ const login = async (req: Request, res: Response) => {
   const requestBody = req.body as User;
   const { username, password } = requestBody;
 
-  const user = await User.findOne({ where: { username } });
+  const user = await User.findOne({
+    where: { username },
+    select: ["id", "username", "password"],
+  });
+
   if (!user) {
     return res.status(401).json({ error: "invalid username or password" });
   }
