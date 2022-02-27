@@ -17,13 +17,13 @@ const register = async (req: Request, res: Response) => {
   const seed = (Math.random() + 1).toString(36).substring(2);
   const avatar = `https://avatars.dicebear.com/api/big-ears-neutral/${seed}.svg`;
 
-  const user = await User.create({
+  await User.create({
     username,
     password: passwordHash,
     avatar,
   }).save();
 
-  return res.status(201).json({ user });
+  return res.status(201).json({ message: "user created" });
 };
 
 const login = async (req: Request, res: Response) => {
@@ -49,7 +49,7 @@ const login = async (req: Request, res: Response) => {
     { expiresIn: 60 * 60 * 24 }
   );
 
-  return res.json({ token, user });
+  return res.json({ token });
 };
 
 const getCurrentUser = async (req: Request, res: Response) => {
