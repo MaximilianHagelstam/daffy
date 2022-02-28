@@ -50,7 +50,7 @@ const login = async (req: Request, res: Response) => {
       id: user.id,
     },
     process.env.JWT_SECRET,
-    { expiresIn: 60 * 60 * 24 }
+    { expiresIn: "7d" }
   );
 
   return res.json({ token });
