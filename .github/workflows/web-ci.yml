@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Lint and test frontend
+    name: Build and lint frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -29,12 +29,6 @@ jobs:
       - name: Build
         working-directory: web
         run: yarn build
-      - name: Test
-        working-directory: web
-        run: yarn test
       - name: Lint
         working-directory: web
         run: yarn lint
-      - name: Format
-        working-directory: web
-        run: yarn format

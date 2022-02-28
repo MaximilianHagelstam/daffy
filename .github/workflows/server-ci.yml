@@ -32,6 +32,3 @@ jobs:
       - name: Lint
         working-directory: server
         run: yarn lint
-      - name: Format
-        working-directory: server
-        run: yarn format

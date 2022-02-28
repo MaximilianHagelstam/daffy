@@ -9,7 +9,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "settings": {
     "react": {
       "pragma": "React",
@@ -19,6 +19,7 @@
   "rules": {
     "no-shadow": "warn",
     "no-console": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": "error"
   }
 }
