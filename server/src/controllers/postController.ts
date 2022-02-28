@@ -3,7 +3,7 @@ import Post from "../entities/Post";
 
 const findAll = async (_req: Request, res: Response) => {
   const posts = await Post.find({ relations: ["creator"] });
-  res.json({ posts });
+  return res.json({ posts });
 };
 
 const create = async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ const create = async (req: Request, res: Response) => {
     creatorId: req.token.id,
   }).save();
 
-  res.status(201).json({ post });
+  return res.status(201).json({ post });
 };
 
 export default { findAll, create };

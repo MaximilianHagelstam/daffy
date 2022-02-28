@@ -58,7 +58,7 @@ const login = async (req: Request, res: Response) => {
 
 const getCurrentUser = async (req: Request, res: Response) => {
   const user = await User.findOne(req.token.id);
-  res.json({ user });
+  return res.json({ user });
 };
 
 export default { register, login, getCurrentUser };
