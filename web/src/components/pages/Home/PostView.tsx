@@ -1,6 +1,11 @@
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import Post from "../../../interfaces/Post";
 
-const Post = () => {
+interface PostProps {
+  post: Post;
+}
+
+const PostView = ({ post }: PostProps) => {
   return (
     <Box
       maxW="400px"
@@ -12,17 +17,17 @@ const Post = () => {
       overflow="hidden"
     >
       <Stack mt={4} direction="row" spacing={4} align="center">
-        <Avatar src="https://avatars0.githubusercontent.com/u/1164541?v=4" />
+        <Avatar src={post.creator.avatar} />
         <Stack direction="column" spacing={0} fontSize="sm">
-          <Text fontWeight={600}>Achim Rolle</Text>
-          <Text color="gray.500">Feb 08, 2021</Text>
+          <Text fontWeight={600}>@{post.creator.username}</Text>
+          <Text color="gray.500">{post.createdAt}</Text>
         </Stack>
       </Stack>
       <Text py={4} fontSize="md">
-        hubsnvekbsqwsfloojsnldysdkaktkwhwozjgynpbbblcbjjmnuegmgwoijtnaczsvrsstowqjkyyftfvrewwldwapzdkczuptfnlylyrketrqdneqqnqjzsiuiuziuwvarhqeuimjssiggszuiowv
+        {post.body}
       </Text>
     </Box>
   );
 };
 
-export default Post;
+export default PostView;
