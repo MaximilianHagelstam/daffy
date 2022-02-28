@@ -9,26 +9,33 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [postLimit, setPostLimit] = useState(5);
 
+  const handleLoadMore = async () => {
+    setPostLimit(postLimit + 5);
+    const loadedPosts = await PostService.getAll(postLimit);
+    const newPosts = [...posts, ...loadedPosts];
+    setPosts(newPosts);
+  };
+
   useEffect(() => {
     const getPosts = async () => {
       setLoading(true);
       const fetchedPosts = await PostService.getAll(postLimit);
-
       setPosts(fetchedPosts);
       setLoading(false);
     };
 
     getPosts();
-  }, [postLimit]);
+  }, []);
 
   return (
     <>
       {loading ? <Spinner color="purple.400" /> : <PostList posts={posts} />}
       <Button
-        onClick={() => {
-          setPostLimit(postLimit + 5);
-        }}
+        onClick={handleLoadMore}
         isLoading={loading}
+        my={4}
+        colorScheme="purple"
+        variant="ghost"
       >
         Load more
       </Button>
