@@ -6,7 +6,7 @@ import createPostSchema from "../validators/createPostSchema";
 
 const postRouter = express.Router();
 
-postRouter.get("/", authenticate, postController.findAll);
+postRouter.get("/", postController.findAll);
 postRouter.post(
   "/",
 
