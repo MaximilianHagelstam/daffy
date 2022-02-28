@@ -1,17 +1,17 @@
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Post from "../../../interfaces/Post";
 
-interface PostProps {
+interface PostViewProps {
   post: Post;
 }
 
-const PostView = ({ post }: PostProps) => {
+const PostView = ({ post }: PostViewProps) => {
   return (
     <Box
       maxW="400px"
       w="full"
       bg={useColorModeValue("white", "gray.800")}
-      boxShadow="lg"
+      boxShadow="md"
       rounded="2xl"
       px={4}
       overflow="hidden"

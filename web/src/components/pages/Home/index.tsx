@@ -1,25 +1,37 @@
-import PostView from "./PostView";
+import { Button, Spinner } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import Post from "../../../interfaces/Post";
+import PostService from "../../../services/PostService";
+import PostList from "./PostList";
 
 const Home = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [postLimit, setPostLimit] = useState(5);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      setLoading(true);
+      const fetchedPosts = await PostService.getAll(postLimit);
+
+      setPosts(fetchedPosts);
+      setLoading(false);
+    };
+
+    getPosts();
+  }, [postLimit]);
+
   return (
     <>
-      <PostView
-        post={{
-          id: "f4d7b7bd-fe39-4bc8-b98a-1e8df99320a7",
-          body: "test",
-          creatorId: "f01d4010-ef2b-4754-b77c-025fcd316e16",
-          createdAt: "2022-02-28T15:11:57.742Z",
-          updatedAt: "2022-02-28T15:11:57.742Z",
-          creator: {
-            id: "f01d4010-ef2b-4754-b77c-025fcd316e16",
-            username: "penis",
-            avatar:
-              "https://avatars.dicebear.com/api/big-ears-neutral/wbltkyh0e1.svg",
-            createdAt: "2022-02-23T09:14:27.957Z",
-            updatedAt: "2022-02-23T09:14:27.957Z",
-          },
+      {loading ? <Spinner color="purple.400" /> : <PostList posts={posts} />}
+      <Button
+        onClick={() => {
+          setPostLimit(postLimit + 5);
         }}
-      />
+        isLoading={loading}
+      >
+        Load more
+      </Button>
     </>
   );
 };
