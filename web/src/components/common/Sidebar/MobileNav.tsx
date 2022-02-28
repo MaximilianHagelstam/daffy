@@ -13,8 +13,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
-import User from "../../interfaces/User";
-import UserService from "../../services/UserService";
+import User from "../../../interfaces/User";
+import UserService from "../../../services/UserService";
 import ToggleThemeButton from "./ToggleThemeButton";
 
 interface MobileProps {

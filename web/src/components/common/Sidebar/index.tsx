@@ -6,7 +6,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import User from "../../interfaces/User";
+import User from "../../../interfaces/User";
 import MobileNav from "./MobileNav";
 import SidebarContent from "./SidebarContent";
 
