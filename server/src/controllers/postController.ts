@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
 import Post from "../entities/Post";
 
-const findAll = async (_req: Request, res: Response) => {
-  const posts = await Post.find({ relations: ["creator"] });
+const findAll = async (req: Request, res: Response) => {
+  const limit: number = Number(req.query.limit) || 20;
+
+  const posts = await Post.find({
+    relations: ["creator"],
+    order: { createdAt: "DESC" },
+    take: limit,
+  });
   return res.json({ posts });
 };
 
