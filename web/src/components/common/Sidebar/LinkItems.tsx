@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { FiArrowUp, FiHome, FiSearch, FiTv } from "react-icons/fi";
+import { FiHeart, FiHome, FiSearch, FiTv } from "react-icons/fi";
 
 interface LinkItem {
   name: string;
@@ -10,7 +10,7 @@ interface LinkItem {
 const LinkItems: LinkItem[] = [
   { name: "Home", link: "/", icon: FiHome },
   { name: "Search", link: "/search", icon: FiSearch },
-  { name: "Upvoted", link: "/upvoted", icon: FiArrowUp },
+  { name: "Liked", link: "/liked", icon: FiHeart },
   { name: "Live chat", link: "/chat", icon: FiTv },
 ];
 

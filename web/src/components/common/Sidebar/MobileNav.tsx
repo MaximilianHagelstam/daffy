@@ -12,17 +12,19 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import { useContext } from "react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
-import User from "../../../interfaces/User";
+import { UserContext } from "../../../context/userContext";
 import UserService from "../../../services/UserService";
 import ToggleThemeButton from "./ToggleThemeButton";
 
 interface MobileProps {
   onOpen: () => void;
-  user: User;
 }
 
-const MobileNav = ({ onOpen, user }: MobileProps) => {
+const MobileNav = ({ onOpen }: MobileProps) => {
+  const user = useContext(UserContext);
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -52,34 +54,36 @@ const MobileNav = ({ onOpen, user }: MobileProps) => {
       <HStack spacing={{ base: "0", md: "6" }}>
         <Flex alignItems={"center"}>
           <ToggleThemeButton />
-          <Menu>
-            <MenuButton
-              py={2}
-              _focus={{ boxShadow: "none" }}
-              aria-label="avatar button"
-            >
-              <HStack>
-                <Avatar size={"sm"} src={user.avatar} name={user.username} />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">@{user.username}</Text>
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
-              <MenuItem onClick={UserService.logout}>Logout</MenuItem>
-            </MenuList>
-          </Menu>
+          {user ? (
+            <Menu>
+              <MenuButton
+                py={2}
+                _focus={{ boxShadow: "none" }}
+                aria-label="avatar button"
+              >
+                <HStack>
+                  <Avatar size={"sm"} src={user.avatar} name={user.username} />
+                  <VStack
+                    display={{ base: "none", md: "flex" }}
+                    alignItems="flex-start"
+                    spacing="1px"
+                    ml="2"
+                  >
+                    <Text fontSize="sm">@{user.username}</Text>
+                  </VStack>
+                  <Box display={{ base: "none", md: "flex" }}>
+                    <FiChevronDown />
+                  </Box>
+                </HStack>
+              </MenuButton>
+              <MenuList
+                bg={useColorModeValue("white", "gray.900")}
+                borderColor={useColorModeValue("gray.200", "gray.700")}
+              >
+                <MenuItem onClick={UserService.logout}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
         </Flex>
       </HStack>
     </Flex>

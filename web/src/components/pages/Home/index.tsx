@@ -1,8 +1,8 @@
-import { Button, Spinner, Stack } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Post from "../../../interfaces/Post";
 import PostService from "../../../services/PostService";
-import PostView from "./PostView";
+import PostList from "./PostList";
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -22,17 +22,10 @@ const Home = () => {
 
   return (
     <>
-      {loading ? (
-        <Spinner color="purple.400" />
-      ) : (
-        <Stack spacing={4}>
-          {posts.map((post) => (
-            <PostView key={post.id} post={post} />
-          ))}
-        </Stack>
-      )}
+      {loading ? <Spinner color="purple.400" /> : <PostList posts={posts} />}
       <Button
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           setPage((prev) => prev + 1);
         }}
         isLoading={loading}
