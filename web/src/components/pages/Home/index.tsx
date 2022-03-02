@@ -1,37 +1,40 @@
-import { Button, Spinner } from "@chakra-ui/react";
+import { Button, Spinner, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Post from "../../../interfaces/Post";
 import PostService from "../../../services/PostService";
-import PostList from "./PostList";
+import PostView from "./PostView";
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
-  const [postLimit, setPostLimit] = useState(5);
-
-  const handleLoadMore = async () => {
-    setPostLimit(postLimit + 5);
-    const loadedPosts = await PostService.getAll(postLimit);
-    const newPosts = [...posts, ...loadedPosts];
-    setPosts(newPosts);
-  };
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const getPosts = async () => {
       setLoading(true);
-      const fetchedPosts = await PostService.getAll(postLimit);
-      setPosts(fetchedPosts);
+      const fetchedPosts = await PostService.getAll(page, 5);
+      setPosts((prev) => [...prev, ...fetchedPosts]);
       setLoading(false);
     };
 
     getPosts();
-  }, []);
+  }, [page]);
 
   return (
     <>
-      {loading ? <Spinner color="purple.400" /> : <PostList posts={posts} />}
+      {loading ? (
+        <Spinner color="purple.400" />
+      ) : (
+        <Stack spacing={4}>
+          {posts.map((post) => (
+            <PostView key={post.id} post={post} />
+          ))}
+        </Stack>
+      )}
       <Button
-        onClick={handleLoadMore}
+        onClick={() => {
+          setPage((prev) => prev + 1);
+        }}
         isLoading={loading}
         my={4}
         colorScheme="purple"

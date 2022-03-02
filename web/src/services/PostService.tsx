@@ -2,9 +2,9 @@ import axios from "axios";
 import Post from "../interfaces/Post";
 
 const PostService = {
-  getAll: async (limit: number): Promise<Post[]> => {
+  getAll: async (page: number, perPage: number): Promise<Post[]> => {
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/posts?limit=${limit}`
+      `${process.env.REACT_APP_API_URL}/api/posts?page=${page}&perPage=${perPage}`
     );
     return data.posts;
   },
