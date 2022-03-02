@@ -1,13 +1,22 @@
 import { NextFunction, Request, Response } from "express";
-import { ObjectSchema } from "yup";
-import { AnyObject } from "yup/lib/object";
+import { AnyObject, OptionalObjectSchema } from "yup/lib/object";
 
 const validateRequest =
-  (schema: ObjectSchema<AnyObject>) =>
+  (
+    schema: OptionalObjectSchema<{
+      body?: OptionalObjectSchema<AnyObject>;
+      query?: OptionalObjectSchema<AnyObject>;
+      params?: OptionalObjectSchema<AnyObject>;
+    }>
+  ) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const validatedBody = await schema.validate(req.body);
-      req.body = validatedBody;
+      await schema.validate({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        body: req.body,
+        query: req.query,
+        params: req.params,
+      });
 
       return next();
     } catch (err) {

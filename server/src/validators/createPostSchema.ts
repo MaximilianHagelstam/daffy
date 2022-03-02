@@ -1,9 +1,9 @@
 import { object, string } from "yup";
 
-const createPostSchema = object().shape({
-  body: string()
-    .required()
-    .max(150, "post body should be under 150 characters"),
+const createPostSchema = object({
+  body: object({
+    body: string().max(150).required(),
+  }),
 });
 
 export default createPostSchema;

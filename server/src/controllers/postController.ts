@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import Post from "../entities/Post";
 
 const findAll = async (req: Request, res: Response) => {
-  const perPage: number = Number(req.query.perPage) || 5;
-  const page: number = Number(req.query.page) || 1;
+  const page = Number(req.query.page) || 1;
+  const perPage = Number(req.query.perPage) || 20;
 
   const posts = await Post.find({
     relations: ["creator"],
@@ -11,6 +11,7 @@ const findAll = async (req: Request, res: Response) => {
     take: perPage,
     skip: perPage * (page - 1),
   });
+
   return res.json({ posts });
 };
 
