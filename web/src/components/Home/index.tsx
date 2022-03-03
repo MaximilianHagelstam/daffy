@@ -2,18 +2,19 @@ import { Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Post from "../../interfaces/Post";
 import PostService from "../../services/PostService";
-import "./Home.css";
 import PostList from "./PostList";
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const handleScroll = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
-
-    if (scrollHeight - scrollTop === clientHeight) {
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+      hasMore
+    ) {
       setPage((prev) => prev + 1);
     }
   };
@@ -22,18 +23,26 @@ const Home = () => {
     const getPosts = async () => {
       setLoading(true);
       const fetchedPosts = await PostService.getAll(page, 10);
-      setPosts((prev) => [...prev, ...fetchedPosts]);
+
+      if (fetchedPosts.length === 0) {
+        setHasMore(false);
+      } else {
+        setPosts((prev) => [...prev, ...fetchedPosts]);
+      }
+
       setLoading(false);
     };
 
     getPosts();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [page]);
 
   return (
     <>
-      <div className="content" onScroll={handleScroll}>
-        <PostList posts={posts} />
-      </div>
+      <PostList posts={posts} />
       {loading ? <Spinner color="purple.400" /> : null}
     </>
   );
