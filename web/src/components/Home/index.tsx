@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     const getPosts = async () => {
       setLoading(true);
-      const fetchedPosts = await PostService.getAll(page, 10);
+      const fetchedPosts = await PostService.getAll(page, 20);
 
       if (fetchedPosts.length === 0) {
         setHasMore(false);
