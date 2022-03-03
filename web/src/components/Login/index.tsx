@@ -19,25 +19,20 @@ import {
 import { Field, Form, Formik } from "formik";
 import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { object, string } from "yup";
-import { UserContext } from "../../../context/userContext";
-import UserService from "../../../services/UserService";
+import { UserContext } from "../../context/userContext";
+import UserService from "../../services/UserService";
 
-const registerValidationSchema = object().shape({
+const loginValidationSchema = object().shape({
   username: string()
     .required("Required")
-    .max(50, "Must be under 50 characters")
-    .matches(/^[a-zA-Z0-9]+$/, "Can only contain alphanumeric characters"),
-  password: string()
-    .required("Required")
-    .min(8, "Must be at least 8 characters")
-    .matches(/(?=.*[0-9])/, "Must contain a number"),
+    .matches(/^(?!\s+$).*/, "Required"),
+  password: string().required("Required"),
 });
 
-const Register = () => {
+const Login = () => {
   const toast = useToast();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const currentUser = useContext(UserContext);
@@ -55,7 +50,7 @@ const Register = () => {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Register a new account</Heading>
+          <Heading fontSize={"4xl"}>Log in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
             to connect with the world ✌️
           </Text>
@@ -68,25 +63,23 @@ const Register = () => {
         >
           <Formik
             initialValues={{ username: "", password: "" }}
-            validationSchema={registerValidationSchema}
+            validationSchema={loginValidationSchema}
+            validateOnChange={false}
             onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
 
-              const { title, status } = await UserService.register(
-                data.username,
-                data.password
-              );
+              const res = await UserService.login(data.username, data.password);
 
               setSubmitting(false);
 
-              toast({
-                title,
-                status,
-                isClosable: true,
-              });
-
-              if (status === "success") {
-                navigate("/login");
+              if (res.error) {
+                toast({
+                  title: res.message,
+                  status: "error",
+                  isClosable: true,
+                });
+              } else {
+                window.location.reload();
               }
             }}
           >
@@ -140,14 +133,14 @@ const Register = () => {
                       type="submit"
                       isLoading={isSubmitting}
                     >
-                      Register
+                      Login
                     </Button>
                   </Stack>
                   <Stack pt={6}>
                     <Text align={"center"}>
-                      Already a user?{" "}
-                      <Link color={"purple.400"} href="/login">
-                        Login
+                      Don&apos;t have an account?{" "}
+                      <Link color={"purple.400"} href="/register">
+                        Register
                       </Link>
                     </Text>
                   </Stack>
@@ -161,4 +154,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

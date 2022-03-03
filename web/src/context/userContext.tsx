@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import Loading from "../components/common/Loading";
+import Loading from "../components/Loading";
 import User from "../interfaces/User";
 import UserService from "../services/UserService";
 

@@ -1,5 +1,5 @@
 import { Stack } from "@chakra-ui/react";
-import Post from "../../../interfaces/Post";
+import Post from "../../interfaces/Post";
 import PostView from "./PostView";
 
 interface PostListProps {

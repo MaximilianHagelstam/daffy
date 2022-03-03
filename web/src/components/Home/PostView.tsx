@@ -1,5 +1,5 @@
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
-import Post from "../../../interfaces/Post";
+import Post from "../../interfaces/Post";
 
 interface PostViewProps {
   post: Post;
