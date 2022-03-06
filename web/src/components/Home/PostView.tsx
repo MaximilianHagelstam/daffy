@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Avatar,
   Box,
@@ -23,6 +22,10 @@ interface PostViewProps {
 const PostView = ({ post }: PostViewProps) => {
   const formattedDate = dateFormatter(post.createdAt);
   const user = useContext(UserContext);
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const likeAmount = post.likes!.length;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const postIsLiked = post.likes!.find((like) => like.userId === user!.id)
     ? true
     : false;
@@ -48,11 +51,7 @@ const PostView = ({ post }: PostViewProps) => {
         {post.body}
       </Text>
       <HStack mb={2}>
-        <LikeButton
-          postId={post.id}
-          likes={post.likes!.length}
-          liked={postIsLiked}
-        />
+        <LikeButton postId={post.id} likes={likeAmount} liked={postIsLiked} />
         <IconButton
           colorScheme="blue"
           size="sm"
