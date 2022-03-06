@@ -13,13 +13,16 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { FiPlus } from "react-icons/fi";
 import { object, string } from "yup";
+import PostService from "../../services/PostService";
 
 const CreatePostButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   const createPostValidationSchema = object().shape({
     body: string().max(150).required(),
@@ -48,10 +51,24 @@ const CreatePostButton = () => {
             validationSchema={createPostValidationSchema}
             onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
-              console.log(data.body);
+              const res = await PostService.create(data.body);
               setSubmitting(false);
 
-              window.location.reload();
+              if (res) {
+                toast({
+                  title: "Created post",
+                  status: "success",
+                  isClosable: true,
+                });
+                window.location.reload();
+              } else {
+                toast({
+                  title: "Could not create post",
+                  status: "error",
+                  isClosable: true,
+                });
+                onClose();
+              }
             }}
           >
             {({ errors, isSubmitting }) => (
