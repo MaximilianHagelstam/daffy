@@ -1,6 +1,7 @@
-import { Flex, Icon, Link } from "@chakra-ui/react";
+import { Flex, Icon, Link, useColorModeValue } from "@chakra-ui/react";
 import { ReactText } from "react";
 import { IconType } from "react-icons";
+import { useLocation } from "react-router-dom";
 
 interface NavItemProps {
   icon: IconType;
@@ -9,11 +10,16 @@ interface NavItemProps {
 }
 
 const NavItem = ({ icon, link, children }: NavItemProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === link;
+  const bgColor = useColorModeValue("purple.300", "purple.500");
+
   return (
     <Link
       href={link}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
+      _activeLink={{ color: "red" }}
     >
       <Flex
         align="center"
@@ -22,8 +28,10 @@ const NavItem = ({ icon, link, children }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
+        bg={isActive ? bgColor : undefined}
+        color={isActive ? "white" : undefined}
         _hover={{
-          bg: "purple.500",
+          bg: `${bgColor}`,
           color: "white",
         }}
       >
