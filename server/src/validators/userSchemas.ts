@@ -1,6 +1,13 @@
 import { object, string } from "yup";
 
-const registerUserSchema = object({
+export const loginUserSchema = object({
+  body: object({
+    username: string().required(),
+    password: string().required(),
+  }),
+});
+
+export const registerUserSchema = object({
   body: object({
     username: string()
       .required()
@@ -12,5 +19,3 @@ const registerUserSchema = object({
       .matches(/(?=.*[0-9])/, "must contain a number"),
   }),
 });
-
-export default registerUserSchema;

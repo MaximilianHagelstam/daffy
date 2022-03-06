@@ -2,8 +2,7 @@ import express from "express";
 import userController from "../controllers/userController";
 import authenticate from "../middleware/authenticate";
 import validateRequest from "../middleware/validateRequest";
-import loginUserSchema from "../validators/loginUserSchema";
-import registerUserSchema from "../validators/registerUserSchema";
+import { loginUserSchema, registerUserSchema } from "../validators/userSchemas";
 
 const userRouter = express.Router();
 
