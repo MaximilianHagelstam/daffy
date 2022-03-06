@@ -1,11 +1,14 @@
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Post from "../../interfaces/Post";
+import { formatDate } from "../../utils/formatters";
 
 interface PostViewProps {
   post: Post;
 }
 
 const PostView = ({ post }: PostViewProps) => {
+  const formattedDate = formatDate(post.createdAt);
+
   return (
     <Box
       maxW="400px"
@@ -20,7 +23,7 @@ const PostView = ({ post }: PostViewProps) => {
         <Avatar src={post.creator.avatar} />
         <Stack direction="column" spacing={0} fontSize="sm">
           <Text fontWeight={600}>@{post.creator.username}</Text>
-          <Text color="gray.500">{post.createdAt}</Text>
+          <Text color="gray.500">{formattedDate}</Text>
         </Stack>
       </Stack>
       <Text py={4} fontSize="md">
