@@ -8,10 +8,10 @@ export const getUserToken = (): string | null => {
   return token;
 };
 
-export const setUserToken = (token: string): void => {
+export const setUserToken = (token: string) => {
   window.localStorage.setItem(LOCALSTORAGE_JWT_ID, token);
 };
 
-export const removeUserToken = (): void => {
+export const removeUserToken = () => {
   window.localStorage.removeItem(LOCALSTORAGE_JWT_ID);
 };

@@ -24,9 +24,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setUser();
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
     <UserContext.Provider value={currentUser}>{children}</UserContext.Provider>

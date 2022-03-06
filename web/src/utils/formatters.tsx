@@ -1,9 +1,13 @@
-export const dateFormatter = (date: string): string =>
-  `${new Date(date).toLocaleDateString("en-uk")} ${new Date(
-    date
-  ).toLocaleTimeString("en-uk", { hour: "2-digit", minute: "2-digit" })}`;
+export const dateFormatter = (dateStr: string) => {
+  const date = new Date(dateStr).toLocaleDateString("en-uk");
+  const time = new Date(dateStr).toLocaleTimeString("en-uk", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return `${date} ${time}`;
+};
 
-export const kFormatter = (num: number): string => {
+export const kFormatter = (num: number) => {
   if (num < 1000) {
     return `${num}`;
   }

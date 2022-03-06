@@ -3,9 +3,12 @@ import jwt from "jsonwebtoken";
 import Token from "../interfaces/Token";
 
 const getRequestToken = (req: Request): string | null => {
-  const authorization = req.get("authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    return authorization.substring(7);
+  const authorizationHeaderValue = req.get("authorization");
+  if (
+    authorizationHeaderValue &&
+    authorizationHeaderValue.toLowerCase().startsWith("bearer ")
+  ) {
+    return authorizationHeaderValue.substring(7);
   }
   return null;
 };

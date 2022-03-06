@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../entities/User";
+import getRandomAvatarUrl from "../utils/getRandomAvatarUrl";
 
 const register = async (req: Request, res: Response) => {
   const requestBody = req.body as User;
@@ -13,9 +14,7 @@ const register = async (req: Request, res: Response) => {
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
-
-  const seed = (Math.random() + 1).toString(36).substring(2);
-  const avatar = `https://avatars.dicebear.com/api/big-ears-neutral/${seed}.svg`;
+  const avatar = getRandomAvatarUrl();
 
   await User.create({
     username,

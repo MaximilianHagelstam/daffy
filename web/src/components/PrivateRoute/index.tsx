@@ -9,11 +9,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const currentUser = useContext(UserContext);
-
-  if (!currentUser) {
-    return <Navigate to="/login" />;
-  }
-
+  if (!currentUser) return <Navigate to="/login" />;
   return <Layout>{children}</Layout>;
 };
 

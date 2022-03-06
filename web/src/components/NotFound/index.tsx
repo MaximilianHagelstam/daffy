@@ -20,7 +20,6 @@ const NotFound = () => {
       <Text color={"gray.500"} mb={6}>
         The page you&apos;re looking for does not seem to exist
       </Text>
-
       <Button
         colorScheme="purple"
         bgGradient="linear(to-r, purple.400, purple.500, purple.600)"

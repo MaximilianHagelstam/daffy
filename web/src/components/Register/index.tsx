@@ -41,10 +41,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const currentUser = useContext(UserContext);
-
-  if (currentUser) {
-    return <Navigate to="/" />;
-  }
+  if (currentUser) return <Navigate to="/" />;
 
   return (
     <Flex

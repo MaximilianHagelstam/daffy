@@ -10,10 +10,6 @@ import { IconType } from "react-icons";
 import { FiHeart, FiHome, FiSearch, FiTv } from "react-icons/fi";
 import NavItem from "./NavItem";
 
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
-
 interface LinkItem {
   name: string;
   icon: IconType;
@@ -26,6 +22,10 @@ const LinkItems: LinkItem[] = [
   { name: "Liked", link: "/liked", icon: FiHeart },
   { name: "Live chat", link: "/chat", icon: FiTv },
 ];
+
+interface SidebarProps extends BoxProps {
+  onClose: () => void;
+}
 
 const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
   return (
