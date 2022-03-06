@@ -20,7 +20,7 @@ import { FiPlus } from "react-icons/fi";
 import { object, string } from "yup";
 import PostService from "../../services/PostService";
 
-const CreatePostButton = () => {
+const CreateButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -104,4 +104,4 @@ const CreatePostButton = () => {
   );
 };
 
-export default CreatePostButton;
+export default CreateButton;

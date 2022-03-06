@@ -15,11 +15,11 @@ import { useRef, useState } from "react";
 import { FiTrash } from "react-icons/fi";
 import PostService from "../../services/PostService";
 
-interface DeletePostButtonProps {
+interface DeleteButtonProps {
   postId: string;
 }
 
-const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
+const DeleteButton = ({ postId }: DeleteButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const toast = useToast();
@@ -91,4 +91,4 @@ const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
   );
 };
 
-export default DeletePostButton;
+export default DeleteButton;

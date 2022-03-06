@@ -2,7 +2,7 @@ import { Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Post from "../../interfaces/Post";
 import PostService from "../../services/PostService";
-import CreatePostButton from "./CreatePostButton";
+import CreateButton from "./CreateButton";
 import PostList from "./PostList";
 
 const Home = () => {
@@ -45,7 +45,7 @@ const Home = () => {
     <>
       <PostList posts={posts} />
       {loading ? <Spinner color="purple.400" /> : null}
-      <CreatePostButton />
+      <CreateButton />
     </>
   );
 };
