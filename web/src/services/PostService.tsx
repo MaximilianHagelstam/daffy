@@ -32,4 +32,26 @@ const create = async (body: string): Promise<Post | null> => {
   }
 };
 
-export default { getAll, create };
+const remove = async (postId: string): Promise<{ error: boolean }> => {
+  try {
+    const token = getUserToken();
+    if (!token) return { error: true };
+
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/api/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status !== 204) return { error: true };
+
+    return { error: false };
+  } catch (err) {
+    return { error: true };
+  }
+};
+
+export default { getAll, create, remove };

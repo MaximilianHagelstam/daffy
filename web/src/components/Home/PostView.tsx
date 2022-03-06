@@ -1,6 +1,18 @@
-import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { useContext } from "react";
+import { FiHeart, FiMessageCircle } from "react-icons/fi";
+import { UserContext } from "../../context/userContext";
 import Post from "../../interfaces/Post";
 import { dateFormatter } from "../../utils/formatters";
+import DeletePostButton from "./DeletePostButton";
 
 interface PostViewProps {
   post: Post;
@@ -8,6 +20,7 @@ interface PostViewProps {
 
 const PostView = ({ post }: PostViewProps) => {
   const formattedDate = dateFormatter(post.createdAt);
+  const user = useContext(UserContext);
 
   return (
     <Box
@@ -29,6 +42,27 @@ const PostView = ({ post }: PostViewProps) => {
       <Text py={4} fontSize="md">
         {post.body}
       </Text>
+      <HStack mb={2}>
+        <IconButton
+          colorScheme="red"
+          size="sm"
+          variant="ghost"
+          rounded="full"
+          icon={<FiHeart />}
+          aria-label="Like"
+        />
+        <IconButton
+          colorScheme="blue"
+          size="sm"
+          variant="ghost"
+          rounded="full"
+          icon={<FiMessageCircle />}
+          aria-label="Comment"
+        />
+        {user?.id === post.creatorId ? (
+          <DeletePostButton postId={post.id} />
+        ) : null}
+      </HStack>
     </Box>
   );
 };
