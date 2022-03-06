@@ -30,7 +30,7 @@ const register = async (req: Request, res: Response) => {
       updatedAt: user.updatedAt,
     };
 
-    logger.info("Created user", user);
+    logger.info(`Created user ${user.username}`);
     return res.status(201).json({ user: userWithoutPassword });
   } catch (err) {
     logger.error(`Error registering user: ${err}`);
@@ -57,7 +57,7 @@ const login = async (req: Request, res: Response) => {
       expiresIn: "7d",
     });
 
-    logger.info("Logged in user", user);
+    logger.info(`Logged in user ${user.username}`);
     return res.json({ token });
   } catch (err) {
     logger.error(`Error logging in: ${err}`);
