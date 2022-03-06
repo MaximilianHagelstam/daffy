@@ -4,13 +4,11 @@ import Post from "../entities/Post";
 
 const likePost = async (req: Request, res: Response) => {
   try {
-    const requestBody = req.body as Like;
-
-    const post = await Post.findOne(requestBody.postId);
+    const post = await Post.findOne(req.params.postId);
     if (!post) return res.status(400).json({ error: "post does not exist" });
 
     await Like.create({
-      postId: requestBody.postId,
+      postId: req.params.postId,
       userId: req.token.id,
     }).save();
     return res.status(201).json({ message: "liked post" });
@@ -21,13 +19,35 @@ const likePost = async (req: Request, res: Response) => {
 
 const unLikePost = async (req: Request, res: Response) => {
   try {
-    const requestBody = req.body as Like;
-
-    await Like.delete({ postId: requestBody.postId, userId: req.token.id });
-    return res.status(400).json({ error: "removed like from post" });
+    await Like.delete({ postId: req.params.postId, userId: req.token.id });
+    return res.status(204).end();
   } catch (err) {
-    return res.status(400).json({ error: "can not like post" });
+    return res.status(400).json({ error: "can not unlike post" });
   }
 };
 
-export default { likePost, unLikePost };
+const getLikeAmount = async (req: Request, res: Response) => {
+  try {
+    const likes = await Like.find({
+      where: { postId: req.params.postId },
+    });
+    return res.json({ like_amount: likes.length });
+  } catch (err) {
+    return res.status(400).json({ error: "can not find post" });
+  }
+};
+
+const checkIfLiked = async (req: Request, res: Response) => {
+  try {
+    const like = await Like.findOne({
+      where: { postId: req.params.postId, userId: req.token.id },
+    });
+
+    if (like) return res.json({ liked: true });
+    return res.json({ liked: false });
+  } catch (err) {
+    return res.status(400).json({ error: "can not check if liked" });
+  }
+};
+
+export default { likePost, unLikePost, getLikeAmount, checkIfLiked };
