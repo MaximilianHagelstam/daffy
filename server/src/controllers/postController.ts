@@ -26,4 +26,22 @@ const create = async (req: Request, res: Response) => {
   return res.status(201).json({ post });
 };
 
-export default { findAll, create };
+const remove = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.token.id;
+
+    const post = await Post.findOne(req.params.postId);
+    if (!post) return res.status(400).json({ error: "post does not exist" });
+
+    if (post.creatorId !== userId)
+      return res.status(401).json({ error: "forbidden action" });
+
+    await Post.delete({ id: postId, creatorId: userId });
+    return res.status(204).end();
+  } catch (err) {
+    return res.status(400).json({ error: "post does not exist" });
+  }
+};
+
+export default { findAll, create, remove };
