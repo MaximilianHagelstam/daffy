@@ -6,12 +6,13 @@ import LikeService from "../../services/LikeService";
 interface LikeButtonProps {
   postId: string;
   likes: number;
+  liked: boolean;
 }
 
-const LikeButton = ({ postId, likes }: LikeButtonProps) => {
+const LikeButton = ({ postId, likes, liked }: LikeButtonProps) => {
   const [loading, setLoading] = useState(false);
   const [likeAmount, setLikeAmount] = useState(likes);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(liked);
 
   const handleLike = async () => {
     setIsLiked((prev) => !prev);
