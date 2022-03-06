@@ -68,12 +68,10 @@ const Register = () => {
             validationSchema={registerValidationSchema}
             onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
-
               const { title, status } = await UserService.register(
                 data.username,
                 data.password
               );
-
               setSubmitting(false);
 
               toast({

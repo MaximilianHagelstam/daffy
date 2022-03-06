@@ -65,7 +65,6 @@ const login = async (
     );
 
     setUserToken(data.token);
-
     return { message: "Logged in", error: false };
   } catch (err) {
     const error = err as AxiosError;
@@ -82,7 +81,7 @@ const login = async (
   }
 };
 
-const logout = (): void => {
+const logout = () => {
   removeUserToken();
   window.location.reload();
 };

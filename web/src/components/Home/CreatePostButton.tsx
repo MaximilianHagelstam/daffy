@@ -51,10 +51,10 @@ const CreatePostButton = () => {
             validationSchema={createPostValidationSchema}
             onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
-              const res = await PostService.create(data.body);
+              const post = await PostService.create(data.body);
               setSubmitting(false);
 
-              if (res) {
+              if (post) {
                 toast({
                   title: "Created post",
                   status: "success",
@@ -63,7 +63,7 @@ const CreatePostButton = () => {
                 window.location.reload();
               } else {
                 toast({
-                  title: "Could not create post",
+                  title: "Error creating post",
                   status: "error",
                   isClosable: true,
                 });
@@ -83,7 +83,6 @@ const CreatePostButton = () => {
                     )}
                   </Field>
                 </ModalBody>
-
                 <ModalFooter>
                   <Button variant="ghost" mr={3} onClick={onClose}>
                     Cancel

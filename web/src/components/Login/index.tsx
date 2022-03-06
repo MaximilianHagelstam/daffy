@@ -64,9 +64,7 @@ const Login = () => {
             validateOnChange={false}
             onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
-
               const res = await UserService.login(data.username, data.password);
-
               setSubmitting(false);
 
               if (res.error) {
