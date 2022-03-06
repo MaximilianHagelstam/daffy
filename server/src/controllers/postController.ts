@@ -14,7 +14,7 @@ const findAll = async (req: Request, res: Response) => {
       skip: perPage * (page - 1),
     });
 
-    logger.info(`Found ${perPage} on page ${page}`);
+    logger.info(`Found ${perPage} posts on page ${page}`);
     return res.json({ posts });
   } catch (err) {
     logger.error(`Error finding posts: ${err}`);
@@ -40,7 +40,7 @@ const remove = async (req: Request, res: Response) => {
     const { postId } = req.params;
     const userId = req.token.id;
 
-    const post = await Post.findOne(userId);
+    const post = await Post.findOne(postId);
     if (!post) return res.status(400).json({ error: "post does not exist" });
 
     if (post.creatorId !== userId)

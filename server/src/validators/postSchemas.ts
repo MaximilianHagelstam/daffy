@@ -12,9 +12,3 @@ export const paginationSchema = object({
     perPage: number().min(1).max(100).default(20),
   }),
 });
-
-export const removePostSchema = object({
-  params: object({
-    postId: string().required(),
-  }),
-});

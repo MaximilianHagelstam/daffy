@@ -16,11 +16,7 @@ const getRequestToken = (req: Request): string | null => {
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = getRequestToken(req);
-    if (!token) {
-      return res.status(401).json({
-        error: "missing token",
-      });
-    }
+    if (!token) return res.status(401).json({ error: "missing token" });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.token = decoded as Token;
