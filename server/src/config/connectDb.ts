@@ -1,4 +1,5 @@
 import { createConnection } from "typeorm";
+import { Like } from "../entities/Like";
 import Post from "../entities/Post";
 import User from "../entities/User";
 import { DB_URL, IS_PROD } from "./constants";
@@ -14,7 +15,7 @@ const connectDb = async () => {
       ssl: {
         rejectUnauthorized: false,
       },
-      entities: [Post, User],
+      entities: [Post, User, Like],
     });
     logger.info("Connected to database");
   } catch (err) {

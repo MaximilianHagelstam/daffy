@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Like } from "./Like";
 import Post from "./Post";
 
 @Entity({ name: "users" })
@@ -25,6 +26,9 @@ export default class User extends BaseEntity {
 
   @OneToMany(() => Post, (post) => post.creator)
   posts: Post[];
+
+  @OneToMany(() => Like, (like) => like.user)
+  likes: Like[];
 
   @CreateDateColumn()
   createdAt: Date;
