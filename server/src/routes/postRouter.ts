@@ -6,7 +6,7 @@ import { createPostSchema, paginationSchema } from "../validators/postSchemas";
 
 const postRouter = express.Router();
 
-postRouter.get("/", validateRequest(paginationSchema), postController.findAll);
+postRouter.get("/", validateRequest(paginationSchema), postController.getAll);
 postRouter.post(
   "/",
   authenticate,

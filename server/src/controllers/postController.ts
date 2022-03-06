@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import logger from "../config/logger";
 import Post from "../entities/Post";
 
-const findAll = async (req: Request, res: Response) => {
+const getAll = async (req: Request, res: Response) => {
   try {
     const page = Number(req.query.page) || 1;
     const perPage = Number(req.query.perPage) || 20;
@@ -56,4 +56,4 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-export default { findAll, create, remove };
+export default { getAll, create, remove };
