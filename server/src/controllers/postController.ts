@@ -8,7 +8,7 @@ const getAll = async (req: Request, res: Response) => {
     const perPage = Number(req.query.perPage) || 20;
 
     const posts = await Post.find({
-      relations: ["creator"],
+      relations: ["creator", "likes"],
       order: { createdAt: "DESC" },
       take: perPage,
       skip: perPage * (page - 1),

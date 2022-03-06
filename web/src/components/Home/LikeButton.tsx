@@ -1,15 +1,16 @@
 import { Button } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import LikeService from "../../services/LikeService";
 
 interface LikeButtonProps {
   postId: string;
+  likes: number;
 }
 
-const LikeButton = ({ postId }: LikeButtonProps) => {
+const LikeButton = ({ postId, likes }: LikeButtonProps) => {
   const [loading, setLoading] = useState(false);
-  const [likeAmount, setLikeAmount] = useState(0);
+  const [likeAmount, setLikeAmount] = useState(likes);
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = async () => {
@@ -25,19 +26,6 @@ const LikeButton = ({ postId }: LikeButtonProps) => {
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    const loadLikeInfo = async () => {
-      setLoading(true);
-      const { liked, amount } = await LikeService.getInfo(postId);
-
-      setLikeAmount(amount);
-      setIsLiked(liked);
-      setLoading(false);
-    };
-
-    loadLikeInfo;
-  }, []);
 
   return (
     <Button

@@ -44,7 +44,8 @@ const PostView = ({ post }: PostViewProps) => {
         {post.body}
       </Text>
       <HStack mb={2}>
-        <LikeButton postId={post.id} />
+        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion*/}
+        <LikeButton postId={post.id} likes={post.likes!.length} />
         <IconButton
           colorScheme="blue"
           size="sm"

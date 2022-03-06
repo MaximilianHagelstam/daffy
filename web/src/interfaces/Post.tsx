@@ -1,3 +1,4 @@
+import Like from "./Like";
 import User from "./User";
 
 export default interface Post {
@@ -5,6 +6,7 @@ export default interface Post {
   body: string;
   creatorId: string;
   creator: User;
+  likes?: Like[];
   createdAt: string;
   updatedAt: string;
 }
