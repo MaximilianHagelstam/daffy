@@ -3,18 +3,20 @@ import Post from "./Post";
 import User from "./User";
 
 @Entity({ name: "likes" })
-export class Like extends BaseEntity {
+class Like extends BaseEntity {
   @PrimaryColumn()
-  userId: number;
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.likes)
   user: User;
 
   @PrimaryColumn()
-  postId: number;
+  postId: string;
 
   @ManyToOne(() => Post, (post) => post.likes, {
     onDelete: "CASCADE",
   })
   post: Post;
 }
+
+export default Like;

@@ -1,5 +1,5 @@
 import { createConnection } from "typeorm";
-import { Like } from "../entities/Like";
+import Like from "../entities/Like";
 import Post from "../entities/Post";
 import User from "../entities/User";
 import { DB_URL, IS_PROD } from "./constants";

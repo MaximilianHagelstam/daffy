@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import "reflect-metadata";
 import connectDb from "./config/connectDb";
+import likeRouter from "./routes/likeRoute";
 import postRouter from "./routes/postRouter";
 import userRouter from "./routes/userRouter";
 
@@ -18,5 +19,6 @@ app.use(cors());
 
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/likes", likeRouter);
 
 export default app;
