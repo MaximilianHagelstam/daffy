@@ -1,13 +1,13 @@
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Post from "../../interfaces/Post";
-import { formatDate } from "../../utils/formatters";
+import { dateFormatter } from "../../utils/formatters";
 
 interface PostViewProps {
   post: Post;
 }
 
 const PostView = ({ post }: PostViewProps) => {
-  const formattedDate = formatDate(post.createdAt);
+  const formattedDate = dateFormatter(post.createdAt);
 
   return (
     <Box
