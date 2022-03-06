@@ -19,4 +19,15 @@ const likePost = async (req: Request, res: Response) => {
   }
 };
 
-export default { likePost };
+const unLikePost = async (req: Request, res: Response) => {
+  try {
+    const requestBody = req.body as Like;
+
+    await Like.delete({ postId: requestBody.postId, userId: req.token.id });
+    return res.status(400).json({ error: "removed like from post" });
+  } catch (err) {
+    return res.status(400).json({ error: "can not like post" });
+  }
+};
+
+export default { likePost, unLikePost };

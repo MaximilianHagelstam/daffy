@@ -13,14 +13,12 @@ const postRouter = express.Router();
 postRouter.get("/", validateRequest(paginationSchema), postController.findAll);
 postRouter.post(
   "/",
-
   validateRequest(createPostSchema),
   authenticate,
   postController.create
 );
 postRouter.delete(
   "/:postId",
-
   validateRequest(removePostSchema),
   authenticate,
   postController.remove

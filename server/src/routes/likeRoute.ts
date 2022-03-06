@@ -2,16 +2,21 @@ import express from "express";
 import likeController from "../controllers/likeController";
 import authenticate from "../middleware/authenticate";
 import validateRequest from "../middleware/validateRequest";
-import { createLikeSchema } from "../validators/likeSchemas";
+import { createAndDeleteLikeSchema } from "../validators/likeSchemas";
 
 const likeRouter = express.Router();
 
 likeRouter.post(
   "/",
-
-  validateRequest(createLikeSchema),
+  validateRequest(createAndDeleteLikeSchema),
   authenticate,
   likeController.likePost
+);
+likeRouter.delete(
+  "/",
+  validateRequest(createAndDeleteLikeSchema),
+  authenticate,
+  likeController.unLikePost
 );
 
 export default likeRouter;
