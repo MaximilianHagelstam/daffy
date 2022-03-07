@@ -1,20 +1,43 @@
 import { Request, Response } from "express";
 import logger from "../config/logger";
 import Post from "../entities/Post";
+import sortPostsByMostLiked from "../utils/sortPostsByMostLike";
 
 const getAll = async (req: Request, res: Response) => {
   try {
     const page = Number(req.query.page) || 1;
     const perPage = Number(req.query.perPage) || 20;
+    const sortBy = req.query.sortBy || "newest";
 
-    const posts = await Post.find({
-      relations: ["creator", "likes"],
-      order: { createdAt: "DESC" },
-      take: perPage,
-      skip: perPage * (page - 1),
-    });
+    let posts: Post[] = [];
 
-    logger.info(`Found ${perPage} posts on page ${page}`);
+    if (sortBy === "newest") {
+      posts = await Post.find({
+        relations: ["creator", "likes"],
+        order: { createdAt: "DESC" },
+        take: perPage,
+        skip: perPage * (page - 1),
+      });
+    } else if (sortBy === "oldest") {
+      posts = await Post.find({
+        relations: ["creator", "likes"],
+        order: { createdAt: "ASC" },
+        take: perPage,
+        skip: perPage * (page - 1),
+      });
+    } else if (sortBy === "popular") {
+      const postsFromDb = await Post.find({
+        relations: ["creator", "likes"],
+        order: { createdAt: "DESC" },
+        take: perPage,
+        skip: perPage * (page - 1),
+      });
+      posts = sortPostsByMostLiked(postsFromDb);
+    } else {
+      return res.status(400).json({ error: "cant sort by that criteria" });
+    }
+
+    logger.info(`Found ${perPage} posts on page ${page} sorted by ${sortBy}`);
     return res.json({ posts });
   } catch (err) {
     logger.error(`Error finding posts: ${err}`);

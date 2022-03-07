@@ -2,11 +2,11 @@ import express from "express";
 import postController from "../controllers/postController";
 import authenticate from "../middleware/authenticate";
 import validateRequest from "../middleware/validateRequest";
-import { createPostSchema, paginationSchema } from "../validators/postSchemas";
+import { createPostSchema, getPostsSchema } from "../validators/postSchemas";
 
 const postRouter = express.Router();
 
-postRouter.get("/", validateRequest(paginationSchema), postController.getAll);
+postRouter.get("/", validateRequest(getPostsSchema), postController.getAll);
 postRouter.post(
   "/",
   authenticate,

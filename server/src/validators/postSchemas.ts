@@ -6,9 +6,10 @@ export const createPostSchema = object({
   }),
 });
 
-export const paginationSchema = object({
+export const getPostsSchema = object({
   query: object({
     page: number().min(1).default(1),
     perPage: number().min(1).max(100).default(20),
+    sortBy: string().default("newest"),
   }),
 });
