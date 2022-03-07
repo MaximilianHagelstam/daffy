@@ -14,5 +14,11 @@ postRouter.post(
   postController.create
 );
 postRouter.delete("/:postId", authenticate, postController.remove);
+postRouter.get(
+  "/liked",
+  authenticate,
+  validateRequest(getPostsSchema),
+  postController.getLiked
+);
 
 export default postRouter;

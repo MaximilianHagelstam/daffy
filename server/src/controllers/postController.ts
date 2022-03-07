@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import logger from "../config/logger";
+import Like from "../entities/Like";
 import Post from "../entities/Post";
 import sortPostsByMostLiked from "../utils/sortPostsByMostLike";
 
@@ -79,4 +80,31 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll, create, remove };
+const getLiked = async (req: Request, res: Response) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 20;
+
+    const likes = await Like.find({
+      relations: ["post", "post.creator"],
+      take: perPage,
+      skip: perPage * (page - 1),
+      order: { createdAt: "DESC" },
+      where: { userId: req.token.id },
+    });
+
+    const posts: Post[] = [];
+
+    likes.forEach((like) => {
+      posts.push(like.post);
+    });
+
+    logger.info(`Found ${perPage} liked posts on page ${page}`);
+    return res.json({ posts });
+  } catch (err) {
+    logger.error(`Error finding liked posts: ${err}`);
+    return res.status(400).json({ error: "error finding liked posts" });
+  }
+};
+
+export default { getAll, create, remove, getLiked };
