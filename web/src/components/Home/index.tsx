@@ -24,6 +24,8 @@ const Home = () => {
   useEffect(() => {
     const getPosts = async () => {
       setLoading(true);
+      if (!hasMore) return;
+
       const fetchedPosts = await PostService.getAll(page, 20);
 
       if (fetchedPosts.length === 0) {
