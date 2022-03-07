@@ -4,7 +4,7 @@ import Post from "../../interfaces/Post";
 import PostService from "../../services/PostService";
 import CreateButton from "./CreateButton";
 import PostList from "./PostList";
-import SortBySelect from "./SortBySelect";
+import SortMenu from "./SortMenu";
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -19,18 +19,6 @@ const Home = () => {
     ) {
       setPage((prev) => prev + 1);
     }
-  };
-
-  const handleSortByNewest = () => {
-    console.log("hello team");
-  };
-
-  const handleSortByOldest = () => {
-    console.log("hello team");
-  };
-
-  const handleSortByPopular = () => {
-    console.log("hello team");
   };
 
   useEffect(() => {
@@ -56,10 +44,16 @@ const Home = () => {
 
   return (
     <>
-      <SortBySelect
-        handleNewest={handleSortByNewest}
-        handleOldest={handleSortByOldest}
-        handlePopular={handleSortByPopular}
+      <SortMenu
+        handleNewest={() => {
+          console.log("newest");
+        }}
+        handleOldest={() => {
+          console.log("oldest");
+        }}
+        handlePopular={() => {
+          console.log("popular");
+        }}
       />
       <PostList posts={posts} />
       {loading ? <Spinner color="purple.400" /> : null}

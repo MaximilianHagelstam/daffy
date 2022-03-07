@@ -13,20 +13,20 @@ import {
   FiChevronUp,
 } from "react-icons/fi";
 
-interface SortBySelect {
+interface SortMenuProps {
   handleNewest: () => void;
   handleOldest: () => void;
   handlePopular: () => void;
 }
 
-const SortBySelect = ({
+const SortMenu = ({
   handleNewest,
   handleOldest,
   handlePopular,
-}: SortBySelect) => {
+}: SortMenuProps) => {
   return (
     <Box position="absolute" right="24px">
-      <Menu closeOnSelect={false}>
+      <Menu closeOnSelect={true}>
         <MenuButton
           as={Button}
           rightIcon={<FiArrowDown />}
@@ -50,4 +50,4 @@ const SortBySelect = ({
   );
 };
 
-export default SortBySelect;
+export default SortMenu;
