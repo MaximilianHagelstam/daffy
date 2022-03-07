@@ -12,14 +12,14 @@ interface NavItemProps {
 const NavItem = ({ icon, link, children }: NavItemProps) => {
   const location = useLocation();
   const isActive = location.pathname === link;
-  const bgColor = useColorModeValue("purple.300", "purple.500");
+  const bgColorSelected = useColorModeValue("purple.500", "purple.500");
+  const bgColorHover = useColorModeValue("purple.100", "purple.800");
 
   return (
     <Link
       href={link}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
-      _activeLink={{ color: "red" }}
     >
       <Flex
         align="center"
@@ -28,21 +28,13 @@ const NavItem = ({ icon, link, children }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
-        bg={isActive ? bgColor : undefined}
+        bg={isActive ? bgColorSelected : undefined}
         color={isActive ? "white" : undefined}
         _hover={{
-          bg: `${bgColor}`,
-          color: "white",
+          bg: isActive ? bgColorSelected : bgColorHover,
         }}
       >
-        <Icon
-          mr="4"
-          fontSize="16"
-          _groupHover={{
-            color: "white",
-          }}
-          as={icon}
-        />
+        <Icon mr="4" fontSize="16" as={icon} />
         {children}
       </Flex>
     </Link>
