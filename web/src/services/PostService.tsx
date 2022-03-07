@@ -54,4 +54,17 @@ const remove = async (postId: string): Promise<{ error: boolean }> => {
   }
 };
 
-export default { getAll, create, remove };
+const getLiked = async (page: number, perPage: number): Promise<Post[]> => {
+  const token = getUserToken();
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/posts/liked?page=${page}&perPage=${perPage}`,
+    {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }
+  );
+  return data.posts;
+};
+
+export default { getAll, create, remove, getLiked };

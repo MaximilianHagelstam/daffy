@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
+import Liked from "./components/Liked";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
@@ -17,6 +18,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/liked"
+            element={
+              <PrivateRoute>
+                <Liked />
               </PrivateRoute>
             }
           />

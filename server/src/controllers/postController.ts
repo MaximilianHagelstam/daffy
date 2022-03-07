@@ -86,7 +86,7 @@ const getLiked = async (req: Request, res: Response) => {
     const perPage = Number(req.query.perPage) || 20;
 
     const likes = await Like.find({
-      relations: ["post", "post.creator"],
+      relations: ["post", "post.creator", "post.likes"],
       take: perPage,
       skip: perPage * (page - 1),
       order: { createdAt: "DESC" },

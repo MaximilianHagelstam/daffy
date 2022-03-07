@@ -3,10 +3,8 @@ import { useEffect, useState } from "react";
 import Post from "../../interfaces/Post";
 import PostService from "../../services/PostService";
 import PostCard from "../PostCard";
-import CreateButton from "./CreateButton";
-import SortMenu from "./SortMenu";
 
-const Home = () => {
+const Liked = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -26,7 +24,7 @@ const Home = () => {
       setLoading(true);
       if (!hasMore) return;
 
-      const fetchedPosts = await PostService.getAll(page, 20);
+      const fetchedPosts = await PostService.getLiked(page, 20);
 
       if (fetchedPosts.length === 0) {
         setHasMore(false);
@@ -36,39 +34,22 @@ const Home = () => {
 
       setLoading(false);
     };
-
     getPosts();
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, [page]);
 
   return (
     <>
-      <SortMenu
-        handleNewest={() => {
-          // eslint-disable-next-line no-console
-          console.log("newest");
-        }}
-        handleOldest={() => {
-          // eslint-disable-next-line no-console
-          console.log("oldest");
-        }}
-        handlePopular={() => {
-          // eslint-disable-next-line no-console
-          console.log("popular");
-        }}
-      />
       <Stack spacing={4}>
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
       </Stack>
       {loading ? <Spinner color="purple.400" /> : null}
-      <CreateButton />
     </>
   );
 };
 
-export default Home;
+export default Liked;

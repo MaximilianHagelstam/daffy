@@ -15,11 +15,11 @@ import { dateFormatter } from "../../utils/formatters";
 import DeleteButton from "./DeleteButton";
 import LikeButton from "./LikeButton";
 
-interface PostViewProps {
+interface PostCardProps {
   post: Post;
 }
 
-const PostView = ({ post }: PostViewProps) => {
+const PostCard = ({ post }: PostCardProps) => {
   const formattedDate = dateFormatter(post.createdAt);
   const user = useContext(UserContext);
 
@@ -66,4 +66,4 @@ const PostView = ({ post }: PostViewProps) => {
   );
 };
 
-export default PostView;
+export default PostCard;
