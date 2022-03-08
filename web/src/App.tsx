@@ -5,7 +5,6 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import Register from "./components/Register";
-import Search from "./components/Search";
 import { UserProvider } from "./context/userContext";
 
 const App = () => {
@@ -30,14 +29,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/search"
-            element={
-              <PrivateRoute>
-                <Search />
-              </PrivateRoute>
-            }
-          />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

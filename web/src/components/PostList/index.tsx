@@ -5,9 +5,10 @@ import PostCard from "../PostCard";
 
 interface PostListProps {
   fetchFunction: (page: number, perPage: number) => Promise<Post[]>;
+  searchTerm?: string;
 }
 
-const PostList = ({ fetchFunction }: PostListProps) => {
+const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -49,9 +50,26 @@ const PostList = ({ fetchFunction }: PostListProps) => {
   return (
     <>
       <Stack spacing={4}>
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {searchTerm ? (
+          <>
+            {posts
+              .filter((post) => {
+                if (searchTerm === "") return post;
+                return post.body
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase());
+              })
+              .map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+          </>
+        ) : (
+          <>
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </>
+        )}
       </Stack>
       {loading ? <Spinner color="purple.400" /> : null}
     </>

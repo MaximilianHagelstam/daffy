@@ -1,10 +1,13 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import PostService from "../../services/PostService";
 import PostList from "../PostList";
 import CreateButton from "./CreateButton";
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <>
       {/* <SortMenu
@@ -25,9 +28,16 @@ const Home = () => {
         <InputLeftElement pointerEvents="none">
           <FiSearch />
         </InputLeftElement>
-        <Input type="text" placeholder="Search" focusBorderColor="purple.400" />
+        <Input
+          type="text"
+          placeholder="Search"
+          focusBorderColor="purple.400"
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        />
       </InputGroup>
-      <PostList fetchFunction={PostService.getAll} />
+      <PostList fetchFunction={PostService.getAll} searchTerm={searchTerm} />
       <CreateButton />
     </>
   );
