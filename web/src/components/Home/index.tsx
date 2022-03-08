@@ -1,52 +1,11 @@
-import { Spinner, Stack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import Post from "../../interfaces/Post";
 import PostService from "../../services/PostService";
-import PostCard from "../PostCard";
+import PostList from "../PostList";
 import CreateButton from "./CreateButton";
-import SortMenu from "./SortMenu";
 
 const Home = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight &&
-      hasMore
-    ) {
-      setPage((prev) => prev + 1);
-    }
-  };
-
-  useEffect(() => {
-    const getPosts = async () => {
-      setLoading(true);
-      if (!hasMore) return;
-
-      const fetchedPosts = await PostService.getAll(page, 20);
-
-      if (fetchedPosts.length === 0) {
-        setHasMore(false);
-      } else {
-        setPosts((prev) => [...prev, ...fetchedPosts]);
-      }
-
-      setLoading(false);
-    };
-
-    getPosts();
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [page]);
-
   return (
     <>
-      <SortMenu
+      {/* <SortMenu
         handleNewest={() => {
           // eslint-disable-next-line no-console
           console.log("newest");
@@ -59,13 +18,8 @@ const Home = () => {
           // eslint-disable-next-line no-console
           console.log("popular");
         }}
-      />
-      <Stack spacing={4}>
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
-      </Stack>
-      {loading ? <Spinner color="purple.400" /> : null}
+      /> */}
+      <PostList fetchFunction={PostService.getAll} />
       <CreateButton />
     </>
   );
