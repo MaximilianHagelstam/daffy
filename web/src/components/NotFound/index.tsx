@@ -1,5 +1,6 @@
-import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import Illustration from "./Illustration";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ const NotFound = () => {
       >
         Go to Home
       </Button>
+      <Center mt={16}>
+        <Illustration />
+      </Center>
     </Box>
   );
 };
