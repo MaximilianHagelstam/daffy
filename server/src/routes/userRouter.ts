@@ -1,6 +1,6 @@
 import express from "express";
 import userController from "../controllers/userController";
-import authenticate from "../middleware/authenticate";
+import auth from "../middleware/auth";
 import validateRequest from "../middleware/validateRequest";
 import { loginUserSchema, registerUserSchema } from "../validators/userSchemas";
 
@@ -16,6 +16,6 @@ userRouter.post(
   validateRequest(loginUserSchema),
   userController.login
 );
-userRouter.get("/current", authenticate, userController.getCurrentUser);
+userRouter.get("/me", auth, userController.getCurrentUser);
 
 export default userRouter;

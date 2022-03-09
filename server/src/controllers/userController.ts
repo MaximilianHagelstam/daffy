@@ -1,17 +1,17 @@
 import bcrypt from "bcrypt";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import logger from "../config/logger";
 import User from "../entities/User";
+import ApiError from "../error/ApiError";
 import getRandomAvatarUrl from "../utils/getRandomAvatarUrl";
 
-const register = async (req: Request, res: Response) => {
+const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body as User;
 
     const userWithSameUsername = await User.findOne({ where: { username } });
-    if (userWithSameUsername)
-      return res.status(400).json({ error: "username taken" });
+    if (userWithSameUsername) return next(new ApiError(400, "username taken"));
 
     const passwordHash = await bcrypt.hash(password, 10);
     const avatar = getRandomAvatarUrl();
@@ -33,12 +33,11 @@ const register = async (req: Request, res: Response) => {
     logger.info(`Created user ${user.username}`);
     return res.status(201).json({ user: userWithoutPassword });
   } catch (err) {
-    logger.error(`Error registering user: ${err}`);
-    return res.status(400).json({ error: "error registering user" });
+    return next(err);
   }
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body as User;
 
@@ -46,12 +45,11 @@ const login = async (req: Request, res: Response) => {
       where: { username },
       select: ["id", "username", "password"],
     });
-    if (!user)
-      return res.status(401).json({ error: "invalid username or password" });
+    if (!user) return next(new ApiError(400, "invalid username or password"));
 
     const passwordIsCorrect = await bcrypt.compare(password, user.password);
     if (!passwordIsCorrect)
-      return res.status(401).json({ error: "invalid username or password" });
+      return next(new ApiError(400, "invalid username or password"));
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -60,14 +58,21 @@ const login = async (req: Request, res: Response) => {
     logger.info(`Logged in user ${user.username}`);
     return res.json({ token });
   } catch (err) {
-    logger.error(`Error logging in: ${err}`);
-    return res.status(400).json({ error: "error logging in" });
+    return next(err);
   }
 };
 
-const getCurrentUser = async (req: Request, res: Response) => {
-  const user = await User.findOne(req.token.id);
-  return res.json({ user });
+const getCurrentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne(req.token.id);
+    return res.json({ user });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export default { register, login, getCurrentUser };

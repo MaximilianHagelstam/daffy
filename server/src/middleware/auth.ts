@@ -3,17 +3,19 @@ import jwt from "jsonwebtoken";
 import Token from "../interfaces/Token";
 
 const getRequestToken = (req: Request): string | null => {
+  const TOKEN_PREFIX = "bearer ";
   const authorizationHeaderValue = req.get("authorization");
+
   if (
     authorizationHeaderValue &&
-    authorizationHeaderValue.toLowerCase().startsWith("bearer ")
+    authorizationHeaderValue.toLowerCase().startsWith(TOKEN_PREFIX)
   ) {
-    return authorizationHeaderValue.substring(7);
+    return authorizationHeaderValue.substring(TOKEN_PREFIX.length);
   }
   return null;
 };
 
-const authenticate = (req: Request, res: Response, next: NextFunction) => {
+const auth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = getRequestToken(req);
     if (!token) return res.status(401).json({ error: "missing token" });
@@ -23,10 +25,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
 
     return next();
   } catch (err) {
-    return res.status(401).json({
-      error: "invalid token",
-    });
+    return res.status(401).json({ error: "invalid token" });
   }
 };
 
-export default authenticate;
+export default auth;

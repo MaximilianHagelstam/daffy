@@ -1,10 +1,10 @@
 import express from "express";
 import likeController from "../controllers/likeController";
-import authenticate from "../middleware/authenticate";
+import auth from "../middleware/auth";
 
 const likeRouter = express.Router();
 
-likeRouter.post("/:postId", authenticate, likeController.likePost);
-likeRouter.delete("/:postId", authenticate, likeController.unLikePost);
+likeRouter.post("/:postId", auth, likeController.likePost);
+likeRouter.delete("/:postId", auth, likeController.unLikePost);
 
 export default likeRouter;

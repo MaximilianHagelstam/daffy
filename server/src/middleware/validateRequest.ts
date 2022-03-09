@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { AnyObject, OptionalObjectSchema } from "yup/lib/object";
 
+type ValidationSchema = OptionalObjectSchema<{
+  body?: OptionalObjectSchema<AnyObject>;
+  query?: OptionalObjectSchema<AnyObject>;
+  params?: OptionalObjectSchema<AnyObject>;
+}>;
+
 const validateRequest =
-  (
-    schema: OptionalObjectSchema<{
-      body?: OptionalObjectSchema<AnyObject>;
-      query?: OptionalObjectSchema<AnyObject>;
-      params?: OptionalObjectSchema<AnyObject>;
-    }>
-  ) =>
+  (schema: ValidationSchema) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.validate({
@@ -26,7 +26,7 @@ const validateRequest =
 
       return res
         .status(400)
-        .json({ error: "request body does not match the validation schema" });
+        .json({ error: "request does not match the validation schema" });
     }
   };
 
