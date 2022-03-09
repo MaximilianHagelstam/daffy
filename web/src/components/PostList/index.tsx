@@ -39,7 +39,6 @@ const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
   };
 
   useDidMountEffect(() => {
-    console.log("penis");
     const getPosts = async () => {
       setLoading(true);
       setPage(1);
