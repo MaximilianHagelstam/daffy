@@ -55,7 +55,6 @@ const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
   }, [fetchFunction]);
 
   useEffect(() => {
-    console.log("balls");
     const getPosts = async () => {
       setLoading(true);
       if (!hasMore) {

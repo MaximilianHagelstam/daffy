@@ -66,8 +66,7 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.token.id;
 
     const post = await Post.findOne(postId);
-    if (!post)
-      return next(new ApiError(400, `post with id ${postId} does not exist`));
+    if (!post) return next(new ApiError(400, "post does not exist"));
 
     if (post.creatorId !== userId)
       return next(new ApiError(403, "cant delete another users post"));

@@ -13,9 +13,7 @@ const likePost = async (req: Request, res: Response, next: NextFunction) => {
     logger.info("Liked post");
     return res.status(201).json({ like });
   } catch (err) {
-    return next(
-      new ApiError(400, `post with id ${req.params.postId} does not exist`)
-    );
+    return next(new ApiError(400, "post does not exist"));
   }
 };
 
@@ -29,12 +27,7 @@ const unLikePost = async (req: Request, res: Response, next: NextFunction) => {
     logger.info("Unliked post");
     return res.status(204).end();
   } catch (err) {
-    return next(
-      new ApiError(
-        400,
-        `user ${req.token.id} has not liked post ${req.params.postId}`
-      )
-    );
+    return next(new ApiError(400, "post is not liked"));
   }
 };
 
