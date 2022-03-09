@@ -1,7 +1,22 @@
 import { Spinner, Stack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Post from "../../interfaces/Post";
 import PostCard from "../PostCard";
+
+const useDidMountEffect = (
+  func: React.EffectCallback,
+  deps: React.DependencyList
+) => {
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current) {
+      func();
+    } else {
+      didMount.current = true;
+    }
+  }, deps);
+};
 
 interface PostListProps {
   fetchFunction: (page: number, perPage: number) => Promise<Post[]>;
@@ -23,7 +38,24 @@ const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
     }
   };
 
+  useDidMountEffect(() => {
+    console.log("penis");
+    const getPosts = async () => {
+      setLoading(true);
+      setPage(1);
+      const fetchedPosts = await fetchFunction(1, 20);
+      setPosts(fetchedPosts);
+      setHasMore(true);
+      setLoading(false);
+    };
+    getPosts();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [fetchFunction]);
+
   useEffect(() => {
+    console.log("balls");
     const getPosts = async () => {
       setLoading(true);
       if (!hasMore) {

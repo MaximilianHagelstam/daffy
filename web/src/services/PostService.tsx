@@ -9,6 +9,27 @@ const getAll = async (page: number, perPage: number): Promise<Post[]> => {
   return data.posts;
 };
 
+const getByNewest = async (page: number, perPage: number): Promise<Post[]> => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/posts?page=${page}&perPage=${perPage}&sortBy=newest`
+  );
+  return data.posts;
+};
+
+const getByOldest = async (page: number, perPage: number): Promise<Post[]> => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/posts?page=${page}&perPage=${perPage}&sortBy=oldest`
+  );
+  return data.posts;
+};
+
+const getByPopular = async (page: number, perPage: number): Promise<Post[]> => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/posts?page=${page}&perPage=${perPage}&sortBy=popular`
+  );
+  return data.posts;
+};
+
 const create = async (body: string): Promise<Post | null> => {
   try {
     const token = getUserToken();
@@ -67,4 +88,12 @@ const getLiked = async (page: number, perPage: number): Promise<Post[]> => {
   return data.posts;
 };
 
-export default { getAll, create, remove, getLiked };
+export default {
+  getAll,
+  create,
+  remove,
+  getLiked,
+  getByNewest,
+  getByOldest,
+  getByPopular,
+};
