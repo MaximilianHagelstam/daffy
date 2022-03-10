@@ -1,4 +1,4 @@
-import { Spinner, Stack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDidMountEffect from "../../hooks/useDidMountEffect";
 import Post from "../../interfaces/Post";
@@ -6,7 +6,7 @@ import PostCard from "../PostCard";
 
 interface PostListProps {
   fetchFunction: (page: number, perPage: number) => Promise<Post[]>;
-  searchTerm?: string;
+  searchTerm: string;
 }
 
 const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
@@ -15,28 +15,19 @@ const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight &&
-      hasMore
-    ) {
-      setPage((prev) => prev + 1);
-    }
-  };
-
   useDidMountEffect(() => {
     const getPosts = async () => {
       setLoading(true);
       setPage(1);
+
       const fetchedPosts = await fetchFunction(1, 20);
       setPosts(fetchedPosts);
+
       setHasMore(true);
       setLoading(false);
     };
-    getPosts();
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    getPosts();
   }, [fetchFunction]);
 
   useEffect(() => {
@@ -57,37 +48,37 @@ const PostList = ({ fetchFunction, searchTerm }: PostListProps) => {
 
       setLoading(false);
     };
-    getPosts();
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    getPosts();
   }, [page]);
 
   return (
     <>
       <Stack spacing={4}>
-        {searchTerm ? (
-          <>
-            {posts
-              .filter((post) => {
-                if (searchTerm === "") return post;
-                return post.body
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase());
-              })
-              .map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-          </>
-        ) : (
-          <>
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </>
-        )}
+        {posts
+          .filter((post) => {
+            if (searchTerm === "") return post;
+            return post.body.toLowerCase().includes(searchTerm.toLowerCase());
+          })
+          .map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
       </Stack>
-      {loading ? <Spinner color="purple.400" /> : null}
+      {hasMore && (
+        <Button
+          w="full"
+          maxW="400px"
+          mt={4}
+          variant="ghost"
+          colorScheme="purple"
+          isLoading={loading}
+          onClick={() => {
+            setPage((prev) => prev + 1);
+          }}
+        >
+          Load More
+        </Button>
+      )}
     </>
   );
 };
