@@ -27,18 +27,18 @@ const DeleteButton = ({ postId }: DeleteButtonProps) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    const { error } = await PostService.remove(postId);
+    const { isError, errorMessage, data } = await PostService.remove(postId);
     setLoading(false);
 
-    if (error) {
+    if (isError) {
       toast({
-        title: "Error deleting post",
+        title: errorMessage,
         status: "error",
         isClosable: true,
       });
     } else {
       toast({
-        title: "Deleted post",
+        title: data,
         status: "success",
         isClosable: true,
       });

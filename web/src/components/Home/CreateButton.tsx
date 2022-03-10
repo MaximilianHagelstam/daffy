@@ -49,25 +49,27 @@ const CreateButton = () => {
           <Formik
             initialValues={{ body: "" }}
             validationSchema={createPostValidationSchema}
-            onSubmit={async (data, { setSubmitting }) => {
+            onSubmit={async (formData, { setSubmitting }) => {
               setSubmitting(true);
-              const post = await PostService.create(data.body);
+              const { isError, errorMessage, data } = await PostService.create(
+                formData.body
+              );
               setSubmitting(false);
 
-              if (post) {
+              if (isError) {
                 toast({
-                  title: "Created post",
-                  status: "success",
-                  isClosable: true,
-                });
-                window.location.reload();
-              } else {
-                toast({
-                  title: "Error creating post",
+                  title: errorMessage,
                   status: "error",
                   isClosable: true,
                 });
                 onClose();
+              } else {
+                toast({
+                  title: data,
+                  status: "success",
+                  isClosable: true,
+                });
+                window.location.reload();
               }
             }}
           >

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Post from "../interfaces/Post";
+import ServiceResponse from "../interfaces/ServiceResponse";
 import { getUserToken } from "../utils/localStorageTokenHelpers";
 
 const getAll = async (page: number, perPage: number): Promise<Post[]> => {
@@ -30,48 +31,35 @@ const getByPopular = async (page: number, perPage: number): Promise<Post[]> => {
   return data.posts;
 };
 
-const create = async (body: string): Promise<Post | null> => {
+const create = async (body: string): Promise<ServiceResponse<string>> => {
   try {
-    const token = getUserToken();
-    if (!token) return null;
-
-    const response = await axios.post(
+    await axios.post(
       `${process.env.REACT_APP_API_URL}/api/posts`,
       { body },
       {
         headers: {
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${getUserToken()}`,
         },
       }
     );
 
-    if (response.status !== 201) return null;
-
-    return response.data.post;
+    return { isError: false, data: "Created post" };
   } catch (err) {
-    return null;
+    return { isError: true, errorMessage: "Error creating post" };
   }
 };
 
-const remove = async (postId: string): Promise<{ error: boolean }> => {
+const remove = async (postId: string): Promise<ServiceResponse<string>> => {
   try {
-    const token = getUserToken();
-    if (!token) return { error: true };
+    await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, {
+      headers: {
+        Authorization: `bearer ${getUserToken()}`,
+      },
+    });
 
-    const response = await axios.delete(
-      `${process.env.REACT_APP_API_URL}/api/posts/${postId}`,
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      }
-    );
-
-    if (response.status !== 204) return { error: true };
-
-    return { error: false };
+    return { isError: false, data: "Deleted post" };
   } catch (err) {
-    return { error: true };
+    return { isError: true, errorMessage: "Error removing post" };
   }
 };
 
