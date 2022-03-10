@@ -25,12 +25,12 @@ const SortMenu = ({
   handlePopular,
 }: SortMenuProps) => {
   return (
-    <Box position="absolute" right="24px">
+    <Box>
       <Menu closeOnSelect={true}>
         <MenuButton
           as={Button}
-          rightIcon={<FiArrowDown />}
           colorScheme="purple"
+          rightIcon={<FiArrowDown />}
         >
           Sort
         </MenuButton>

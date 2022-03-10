@@ -1,3 +1,4 @@
+import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import PostService from "../../services/PostService";
 import PostList from "../PostList";
@@ -64,22 +65,24 @@ const Home = () => {
   } else {
     return (
       <>
-        <SortMenu
-          handleNewest={() => {
-            setSortBy("newest");
-          }}
-          handleOldest={() => {
-            setSortBy("oldest");
-          }}
-          handlePopular={() => {
-            setSortBy("popular");
-          }}
-        />
-        <SearchBar
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
+        <HStack maxW="400px" mb={8} spacing={4}>
+          <SearchBar
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+          <SortMenu
+            handleNewest={() => {
+              setSortBy("newest");
+            }}
+            handleOldest={() => {
+              setSortBy("oldest");
+            }}
+            handlePopular={() => {
+              setSortBy("popular");
+            }}
+          />
+        </HStack>
         <PostList
           fetchFunction={PostService.getByNewest}
           searchTerm={searchTerm}

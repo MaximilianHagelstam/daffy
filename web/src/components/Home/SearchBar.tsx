@@ -7,7 +7,7 @@ interface SearchBarProps {
 
 const SearchBar = ({ onChange }: SearchBarProps) => {
   return (
-    <InputGroup colorScheme="purple" maxW="400px" mb={8}>
+    <InputGroup colorScheme="purple">
       <InputLeftElement pointerEvents="none">
         <FiSearch />
       </InputLeftElement>
