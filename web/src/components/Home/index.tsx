@@ -13,22 +13,24 @@ const Home = () => {
   if (sortBy === "oldest") {
     return (
       <>
-        <SortMenu
-          handleNewest={() => {
-            setSortBy("newest");
-          }}
-          handleOldest={() => {
-            setSortBy("oldest");
-          }}
-          handlePopular={() => {
-            setSortBy("popular");
-          }}
-        />
-        <SearchBar
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
+        <HStack maxW="400px" mb={8} spacing={4}>
+          <SearchBar
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+          <SortMenu
+            handleNewest={() => {
+              setSortBy("newest");
+            }}
+            handleOldest={() => {
+              setSortBy("oldest");
+            }}
+            handlePopular={() => {
+              setSortBy("popular");
+            }}
+          />
+        </HStack>
         <PostList
           fetchFunction={PostService.getByOldest}
           searchTerm={searchTerm}
@@ -39,22 +41,24 @@ const Home = () => {
   } else if (sortBy === "popular") {
     return (
       <>
-        <SortMenu
-          handleNewest={() => {
-            setSortBy("newest");
-          }}
-          handleOldest={() => {
-            setSortBy("oldest");
-          }}
-          handlePopular={() => {
-            setSortBy("popular");
-          }}
-        />
-        <SearchBar
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
+        <HStack maxW="400px" mb={8} spacing={4}>
+          <SearchBar
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+          <SortMenu
+            handleNewest={() => {
+              setSortBy("newest");
+            }}
+            handleOldest={() => {
+              setSortBy("oldest");
+            }}
+            handlePopular={() => {
+              setSortBy("popular");
+            }}
+          />
+        </HStack>
         <PostList
           fetchFunction={PostService.getByPopular}
           searchTerm={searchTerm}
