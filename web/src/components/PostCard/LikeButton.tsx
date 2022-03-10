@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import LikeService from "../../services/LikeService";
+import { kFormatter } from "../../utils/formatters";
 
 interface LikeButtonProps {
   postId: string;
@@ -38,7 +39,7 @@ const LikeButton = ({ postId, likes, liked }: LikeButtonProps) => {
       leftIcon={isLiked ? <BsHeartFill /> : <BsHeart />}
       onClick={handleLike}
     >
-      {likeAmount}
+      {kFormatter(likeAmount)}
     </Button>
   );
 };
