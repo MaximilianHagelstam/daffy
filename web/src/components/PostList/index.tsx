@@ -1,22 +1,8 @@
 import { Spinner, Stack } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
 import Post from "../../interfaces/Post";
 import PostCard from "../PostCard";
-
-const useDidMountEffect = (
-  func: React.EffectCallback,
-  deps: React.DependencyList
-) => {
-  const didMount = useRef(false);
-
-  useEffect(() => {
-    if (didMount.current) {
-      func();
-    } else {
-      didMount.current = true;
-    }
-  }, deps);
-};
 
 interface PostListProps {
   fetchFunction: (page: number, perPage: number) => Promise<Post[]>;
