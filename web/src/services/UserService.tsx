@@ -1,5 +1,5 @@
-import { UseToastOptions } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
+import ServiceResponse from "../interfaces/ServiceResponse";
 import User from "../interfaces/User";
 import {
   getUserToken,
@@ -7,10 +7,10 @@ import {
   setUserToken,
 } from "../utils/localStorageTokenHelpers";
 
-const getCurrentUser = async (): Promise<User | null> => {
+const getCurrentUser = async (): Promise<ServiceResponse<User>> => {
   try {
     const token = getUserToken();
-    if (!token) return null;
+    if (!token) return { isError: true, errorMessage: "Unauthenticated" };
 
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/users/me`,
@@ -20,22 +20,24 @@ const getCurrentUser = async (): Promise<User | null> => {
         },
       }
     );
-    return data.user;
+
+    return { isError: false, data: data.user };
   } catch (err) {
-    return null;
+    return { isError: true, errorMessage: "Error getting current user" };
   }
 };
 
 const register = async (
   username: string,
   password: string
-): Promise<UseToastOptions> => {
+): Promise<ServiceResponse<string>> => {
   try {
     await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, {
       username: username.trim(),
       password: password.trim(),
     });
-    return { title: `Registered user "${username}"`, status: "success" };
+
+    return { isError: false, data: `Welcome ${username}` };
   } catch (err) {
     const error = err as AxiosError;
 
@@ -44,17 +46,17 @@ const register = async (
       const errorMessageCapitalized =
         errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1);
 
-      return { title: errorMessageCapitalized, status: "error" };
+      return { isError: true, errorMessage: errorMessageCapitalized };
     }
 
-    return { title: "Could not register user", status: "error" };
+    return { isError: true, errorMessage: "Error registering user" };
   }
 };
 
 const login = async (
   username: string,
   password: string
-): Promise<{ message: string; error: boolean }> => {
+): Promise<ServiceResponse<string>> => {
   try {
     const { data } = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/users/login`,
@@ -65,7 +67,8 @@ const login = async (
     );
 
     setUserToken(data.token);
-    return { message: "Logged in", error: false };
+
+    return { isError: false, data: "Logged in" };
   } catch (err) {
     const error = err as AxiosError;
 
@@ -74,14 +77,14 @@ const login = async (
       const errorMessageCapitalized =
         errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1);
 
-      return { message: errorMessageCapitalized, error: true };
+      return { isError: true, errorMessage: errorMessageCapitalized };
     }
 
-    return { message: "Could not log in", error: true };
+    return { isError: true, errorMessage: "Error logging in" };
   }
 };
 
-const logout = () => {
+const logout = (): void => {
   removeUserToken();
   window.location.reload();
 };

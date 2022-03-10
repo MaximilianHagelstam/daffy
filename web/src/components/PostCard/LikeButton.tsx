@@ -20,10 +20,10 @@ const LikeButton = ({ postId, likes, liked }: LikeButtonProps) => {
 
     setLoading(true);
     if (isLiked) {
-      await LikeService.unLike(postId);
+      await LikeService.unLikePost(postId);
       setLikeAmount((prev) => prev - 1);
     } else {
-      await LikeService.like(postId);
+      await LikeService.likePost(postId);
       setLikeAmount((prev) => prev + 1);
     }
     setLoading(false);

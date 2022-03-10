@@ -1,41 +1,24 @@
 import axios from "axios";
 import { getUserToken } from "../utils/localStorageTokenHelpers";
 
-const like = async (postId: string) => {
-  const token = getUserToken();
+const likePost = async (postId: string): Promise<void> => {
   await axios.post(
     `${process.env.REACT_APP_API_URL}/api/likes/${postId}`,
     {},
     {
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `bearer ${getUserToken()}`,
       },
     }
   );
 };
 
-const unLike = async (postId: string) => {
-  const token = getUserToken();
+const unLikePost = async (postId: string): Promise<void> => {
   await axios.delete(`${process.env.REACT_APP_API_URL}/api/likes/${postId}`, {
     headers: {
-      Authorization: `bearer ${token}`,
+      Authorization: `bearer ${getUserToken()}`,
     },
   });
 };
 
-const getInfo = async (
-  postId: string
-): Promise<{ amount: number; liked: boolean }> => {
-  const token = getUserToken();
-  const { data } = await axios.get(
-    `${process.env.REACT_APP_API_URL}/api/likes/${postId}`,
-    {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    }
-  );
-  return { amount: data.like_amount, liked: data.liked };
-};
-
-export default { like, unLike, getInfo };
+export default { likePost, unLikePost };

@@ -62,14 +62,17 @@ const Login = () => {
             initialValues={{ username: "", password: "" }}
             validationSchema={loginValidationSchema}
             validateOnChange={false}
-            onSubmit={async (data, { setSubmitting }) => {
+            onSubmit={async (formData, { setSubmitting }) => {
               setSubmitting(true);
-              const res = await UserService.login(data.username, data.password);
+              const { isError, errorMessage } = await UserService.login(
+                formData.username,
+                formData.password
+              );
               setSubmitting(false);
 
-              if (res.error) {
+              if (isError) {
                 toast({
-                  title: res.message,
+                  title: errorMessage,
                   status: "error",
                   isClosable: true,
                 });
@@ -90,6 +93,7 @@ const Login = () => {
                       </FormControl>
                     )}
                   </Field>
+
                   <Field name="password">
                     {({ field }: { field: unknown }) => (
                       <FormControl isInvalid={errors.password !== undefined}>
@@ -117,6 +121,7 @@ const Login = () => {
                       </FormControl>
                     )}
                   </Field>
+
                   <Stack spacing={10} pt={2}>
                     <Button
                       size="lg"

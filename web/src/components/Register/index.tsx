@@ -38,6 +38,7 @@ const registerValidationSchema = object().shape({
 const Register = () => {
   const toast = useToast();
   const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const currentUser = useContext(UserContext);
@@ -66,21 +67,27 @@ const Register = () => {
           <Formik
             initialValues={{ username: "", password: "" }}
             validationSchema={registerValidationSchema}
-            onSubmit={async (data, { setSubmitting }) => {
+            onSubmit={async (formData, { setSubmitting }) => {
               setSubmitting(true);
-              const { title, status } = await UserService.register(
-                data.username,
-                data.password
-              );
+              const { isError, errorMessage, data } =
+                await UserService.register(
+                  formData.username,
+                  formData.password
+                );
               setSubmitting(false);
 
-              toast({
-                title,
-                status,
-                isClosable: true,
-              });
-
-              if (status === "success") {
+              if (isError) {
+                toast({
+                  title: errorMessage,
+                  status: "error",
+                  isClosable: true,
+                });
+              } else {
+                toast({
+                  title: data,
+                  status: "success",
+                  isClosable: true,
+                });
                 navigate("/login");
               }
             }}
@@ -97,6 +104,7 @@ const Register = () => {
                       </FormControl>
                     )}
                   </Field>
+
                   <Field name="password">
                     {({ field }: { field: unknown }) => (
                       <FormControl isInvalid={errors.password !== undefined}>
@@ -124,6 +132,7 @@ const Register = () => {
                       </FormControl>
                     )}
                   </Field>
+
                   <Stack spacing={10} pt={2}>
                     <Button
                       size="lg"

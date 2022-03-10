@@ -7,17 +7,17 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-export const UserContext = React.createContext<User | null>(null);
+export const UserContext = React.createContext<User | undefined>(undefined);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const setUser = async () => {
-      const user = await UserService.getCurrentUser();
+      const { data } = await UserService.getCurrentUser();
 
-      setCurrentUser(user);
+      setCurrentUser(data);
       setLoading(false);
     };
 
