@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import User from "../interfaces/User";
-import UserService from "../services/UserService";
+import UserService from "../services/userService";
 
 interface UserProviderProps {
   children: ReactNode;

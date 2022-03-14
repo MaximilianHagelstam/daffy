@@ -22,7 +22,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Navigate } from "react-router";
 import { object, string } from "yup";
 import { UserContext } from "../../context/userContext";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userService";
 
 const loginValidationSchema = object().shape({
   username: string()

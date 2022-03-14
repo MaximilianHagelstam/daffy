@@ -15,7 +15,7 @@ import {
 import { useContext } from "react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { UserContext } from "../../context/userContext";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userService";
 import ToggleThemeButton from "./ToggleThemeButton";
 
 interface NavbarProps {

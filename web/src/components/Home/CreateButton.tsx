@@ -18,7 +18,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import { FiPlus } from "react-icons/fi";
 import { object, string } from "yup";
-import PostService from "../../services/PostService";
+import PostService from "../../services/postService";
 
 const CreateButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

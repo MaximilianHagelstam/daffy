@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import PostService from "../../services/PostService";
+import PostService from "../../services/postService";
 import PostList from "../PostList";
 import CreateButton from "./CreateButton";
 import SearchBar from "./SearchBar";

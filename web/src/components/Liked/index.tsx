@@ -1,4 +1,4 @@
-import PostService from "../../services/PostService";
+import PostService from "../../services/postService";
 import PostList from "../PostList";
 
 const Liked = () => {

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { FiTrash } from "react-icons/fi";
-import PostService from "../../services/PostService";
+import PostService from "../../services/postService";
 
 interface DeleteButtonProps {
   postId: string;

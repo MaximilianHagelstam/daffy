@@ -1,7 +1,7 @@
 import { Button, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import LikeService from "../../services/LikeService";
+import LikeService from "../../services/likeService";
 import { kFormatter } from "../../utils/formatters";
 
 interface LikeButtonProps {
