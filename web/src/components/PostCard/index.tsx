@@ -2,13 +2,11 @@ import {
   Avatar,
   Box,
   HStack,
-  IconButton,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { FiMessageCircle } from "react-icons/fi";
 import { UserContext } from "../../context/userContext";
 import Post from "../../interfaces/Post";
 import { dateFormatter } from "../../utils/formatters";
@@ -52,14 +50,6 @@ const PostCard = ({ post }: PostCardProps) => {
       </Text>
       <HStack mb={2}>
         <LikeButton postId={post.id} likes={likeAmount} liked={postIsLiked} />
-        <IconButton
-          colorScheme="blue"
-          size="sm"
-          variant="ghost"
-          rounded="full"
-          icon={<FiMessageCircle />}
-          aria-label="Comment"
-        />
         {user?.id === post.creatorId ? <DeleteButton postId={post.id} /> : null}
       </HStack>
     </Box>

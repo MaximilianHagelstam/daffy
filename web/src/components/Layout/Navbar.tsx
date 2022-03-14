@@ -52,7 +52,7 @@ const Navbar = ({ onOpen }: NavbarProps) => {
         Nito
       </Text>
       <HStack spacing={{ base: "0", md: "6" }}>
-        <Flex alignItems={"center"}>
+        <Flex alignItems="center">
           <ToggleThemeButton />
           {user ? (
             <Menu>
@@ -62,7 +62,7 @@ const Navbar = ({ onOpen }: NavbarProps) => {
                 aria-label="avatar button"
               >
                 <HStack>
-                  <Avatar size={"sm"} src={user.avatar} name={user.username} />
+                  <Avatar size="sm" src={user.avatar} name={user.username} />
                   <VStack
                     display={{ base: "none", md: "flex" }}
                     alignItems="flex-start"
